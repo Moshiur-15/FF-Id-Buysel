@@ -17,11 +17,12 @@ export default function Navbar() {
                     </div>
 
                     <div className="hidden md:block">
-                        <div className="ml-10 flex items-baseline space-x-8">
+                        <div className="ml-10 flex items-baseline space-x-4">
                             <Link href='/' className="text-black hover:text-gray-600 px-3 py-2 text-sm font-medium transition-colors">Home</Link>
                             <Link href='/allIds' className="text-gray-600 hover:text-black px-3 py-2 text-sm font-medium transition-colors">All IDs</Link>
                             <Link href='/wishlist' className="text-gray-600 hover:text-black px-3 py-2 text-sm font-medium transition-colors">Wishlist</Link>
                             <Link href='/contact' className="text-gray-600 hover:text-black px-3 py-2 text-sm font-medium transition-colors">Contact</Link>
+                            <Link href='/about' className="text-gray-600 hover:text-black px-3 py-2 text-sm font-medium transition-colors">About</Link>
                             <button className="bg-black text-white px-4 py-2 rounded font-medium hover:bg-gray-800 transition-all">
                                 Login
                             </button>

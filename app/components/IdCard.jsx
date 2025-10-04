@@ -1,13 +1,13 @@
 'use client'
 import { Check, Info, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 
 const IdCard = ({ accounts }) => {
 
     const handleClick = () => {
-        // Replace the number with your WhatsApp number (with country code)
-        const phoneNumber = "8801608124877";
+        const phoneNumber = process.env.NEXT_PUBLIC_NUMBER;
         const message = encodeURIComponent("Hello! I want to buy this Free Fire ID.");
         const url = `https://wa.me/${phoneNumber}?text=${message}`;
 
@@ -32,16 +32,17 @@ const IdCard = ({ accounts }) => {
 
                             {/* Status Badge - Top Right */}
                             <div className={`absolute top-4 right-4 rounded px-3 py-1 font-bold text-sm flex items-center gap-2 ${account.status === 'Available'
-                                ? 'bg-[#4649f9f9] text-white text-xs'
-                                : 'bg-red-500 text-white text-xs'
+                                ? 'bg-[#4649f9ba] text-white text-xs'
+                                : 'bg-[#e12f2fc0] text-white text-xs'
                                 }`}>
                                 {account.status === 'Available' ? (
                                     <>
-                                        <Check className="h-4 w-4" />
                                         Available
                                     </>
                                 ) : (
-                                    'SOLD'
+                                    <>
+                                        SOLD
+                                    </>
                                 )}
                             </div>
                         </div>
@@ -98,16 +99,18 @@ const IdCard = ({ accounts }) => {
 
                             {/* Buy Button */}
                             <div className=''>
-                                <Button onClick={handleClick} variant="outline" size="sm" className="flex justify-center items-center gap-2 hover:bg-slate-800 hover:text-white duration-300 rounded-none active:scale-95 absolute bottom-0 left-0 border-t border-r border-gray-200 border-b-0 border-l-0">
+                                <Button onClick={handleClick} variant="outline" size="sm" className="cursor-pointer flex justify-center items-center gap-2 hover:bg-slate-800 hover:text-white duration-300 rounded-none active:scale-95 absolute bottom-0 left-0 border-t border-r border-gray-200 border-b-0 border-l-0">
 
                                     <ShoppingCart className="h-5 w-5" />
                                     Buy Now
                                 </Button>
 
-                                <Button variant="outline" size="sm" className="flex justify-center items-center gap-2 hover:bg-slate-800 hover:text-white duration-300 rounded-none active:scale-95 absolute bottom-0 right-0 border-t border-l border-gray-200 border-b-0 border-r-0">
-                                    <Info className="h-5 w-5" />
-                                    Details
-                                </Button>
+                                <Link href={`/allIds/${account._id}`} className="">
+                                    <Button variant="outline" size="sm" className="cursor-pointer flex justify-center items-center gap-2 hover:bg-slate-800 hover:text-white duration-300 rounded-none active:scale-95 absolute bottom-0 right-0 border-t border-l border-gray-200 border-b-0 border-r-0">
+                                        <Info className="h-5 w-5" />
+                                        Details
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
                     </div>

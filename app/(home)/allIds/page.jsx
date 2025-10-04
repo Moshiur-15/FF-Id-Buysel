@@ -63,8 +63,21 @@ const page = () => {
 
     return (
         <div className="bg-white text-black min-h-screen p-8 container mx-auto">
-            <h1 className="text-3xl font-bold mb-2">All Free Fire IDs</h1>
-            <p className="text-gray-700 mb-8">Browse and find the perfect Free Fire ID for you.</p>
+            <section className='flex flex-col text-center py-6 md:py-8 lg:py-12'>
+                
+                <div> <h1 className="text-3xl font-bold mb-2">ALL FREE FIRE IDS</h1>
+                    <p className="text-gray-700 mb-4">BROWSE AND FIND THE PERFECT FREE FIRE ID FOR YOU.</p></div>
+
+                {/* Search Input Design */}
+                <div className="mb-6">
+                    <input
+                        type="text"
+                        placeholder="🔍 SEARCH FF ID..."
+                        className="w-96 border border-gray-300 p-3 rounded focus:ring-0"
+                    />
+                </div>
+            </section>
+
             <IdCard accounts={accounts} />
         </div>
     );

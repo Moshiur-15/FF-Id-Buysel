@@ -4,6 +4,7 @@ import { Zap, Shield, Users, Star, ChevronDown, MessageCircle, Mail, Phone } fro
 import Link from 'next/link';
 import IdCard from './IdCard';
 
+
 const Home = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
 
@@ -30,59 +31,59 @@ const Home = () => {
     }
   ];
   const [accounts] = useState([
-        {
-            _id: 1,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "sold"
-        },
-        {
-            _id: 2,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "Available"
-        }, {
-            _id: 3,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "Available"
-        }, {
-            _id: 4,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "Available"
-        }, {
-            _id: 5,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "Available"
-        },
-    ]);
+    {
+      _id: 1,
+      name: "RAJ GAMER",
+      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
+      uid: 982374610,
+      price: 15000,
+      level: 78,
+      total_volt: 12,
+      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
+      status: "sold"
+    },
+    {
+      _id: 2,
+      name: "RAJ GAMER",
+      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
+      uid: 982374610,
+      price: 15000,
+      level: 78,
+      total_volt: 12,
+      image: "/563dd4c11d7f61ef99c1b8d1892bd759.jpg",
+      status: "Available"
+    }, {
+      _id: 3,
+      name: "RAJ GAMER",
+      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
+      uid: 982374610,
+      price: 15000,
+      level: 78,
+      total_volt: 12,
+      image: "/563dd4c11d7f61ef99c1b8d1892bd759.jpg",
+      status: "Available"
+    }, {
+      _id: 4,
+      name: "RAJ GAMER",
+      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
+      uid: 982374610,
+      price: 15000,
+      level: 78,
+      total_volt: 12,
+      image: "/563dd4c11d7f61ef99c1b8d1892bd759.jpg",
+      status: "Available"
+    }, {
+      _id: 5,
+      name: "RAJ GAMER",
+      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
+      uid: 982374610,
+      price: 15000,
+      level: 78,
+      total_volt: 12,
+      image: "/563dd4c11d7f61ef99c1b8d1892bd759.jpg",
+      status: "Available"
+    },
+  ]);
 
   return (
     <div className="min-h-screen">
@@ -128,21 +129,21 @@ const Home = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 text-lg max-w-lg mx-auto">
               Everything you need to know about buying and selling Free Fire accounts
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-10 items-center w-full">
+          <div className="flex flex-col md:flex-row gap-10 items-center w-full md:h-[400px]">
             {/* Left Side Image */}
-            <div className="flex justify-center md:w-1/2">
+            <div className="flex justify-center md:w-1/2 h-full">
               <img
                 src="/563dd4c11d7f61ef99c1b8d1892bd759.jpg"
                 alt="FAQ Illustration"
-                className="rounded shadow"
+                className="rounded shadow w-full"
               />
             </div>
-
+{/* md:h-[450px] lg:h-[350px] xl:h-[400px] object-cover */}
             {/* Right Side FAQ */}
             <div className="space-y-4 md:w-1/2">
               {faqs.map((faq, index) => (
