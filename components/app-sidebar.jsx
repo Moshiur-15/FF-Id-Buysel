@@ -19,8 +19,8 @@ const data = {
       url: "/dashboard/add-ids",
     },
     {
-      title: "Status Ids",
-      url: "/dashboard/status-ids",
+      title: "All Users",
+      url: "/dashboard/all-users",
     },
     {
       title: "Manage Ids",

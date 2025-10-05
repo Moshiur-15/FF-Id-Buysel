@@ -20,6 +20,7 @@ const Page = () => {
     images: ["", "", "", "", "", "", "", "", "", ""],
     video: "",
     diamondClaimable: "",
+    status: "available",
   });
 
   const [uploading, setUploading] = useState(false);
