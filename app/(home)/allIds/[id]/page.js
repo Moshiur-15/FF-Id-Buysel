@@ -6,7 +6,6 @@ const AccountDetailsPage = () => {
     const [selectedImage, setSelectedImage] = useState(0);
     const [isFavorite, setIsFavorite] = useState(false);
 
-    // Sample data based on your JSON structure
     const accountData = {
         _id: 1,
         name: "RAJ GAMER",
@@ -74,7 +73,7 @@ const AccountDetailsPage = () => {
                             <Star className="fill-black text-black" size={20} />
                             <span className="text-black font-semibold">Premium Account</span>
                         </span>
-                        <span className="text-lg">UID: {accountData.uid}</span>
+                        <span className="text-lg"><span className='font-bold border-b-4 border-gray-600' >UID:</span> {accountData.uid}</span>
                     </div>
                 </div>
 
@@ -83,7 +82,7 @@ const AccountDetailsPage = () => {
                     {/* Left Column - Media Gallery */}
                     <div className="space-y-4">
                         {/* Main Image/Video Display */}
-                        <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200">
+                        <div className="bg-gray-50 rounded-sm overflow-hidden border border-gray-200">
                             <div className="aspect-video bg-gray-100">
                                 <img
                                     src={accountData.images[selectedImage]}
@@ -99,7 +98,7 @@ const AccountDetailsPage = () => {
                                 <button
                                     key={idx}
                                     onClick={() => setSelectedImage(idx)}
-                                    className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${selectedImage === idx
+                                    className={`aspect-square rounded-sm overflow-hidden border-2 transition-all ${selectedImage === idx
                                         ? 'border-black scale-105'
                                         : 'border-gray-200 hover:border-gray-400'
                                         }`}
@@ -111,7 +110,7 @@ const AccountDetailsPage = () => {
 
                         {/* Video Section */}
                         {accountData.video && (
-                            <div className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200">
+                            <div className="bg-gray-50 rounded-sm overflow-hidden border border-gray-200">
                                 <div className="p-4 border-b border-gray-200">
                                     <h3 className="text-black font-semibold flex items-center gap-2">
                                         <Eye size={20} />
@@ -134,13 +133,13 @@ const AccountDetailsPage = () => {
                     <div className="space-y-6">
 
                         {/* Price Card */}
-                        <div className="bg-black rounded-2xl p-6 shadow-2xl">
+                        <div className="bg-black rounded-sm p-6 shadow-2xl">
                             <div className="flex items-end justify-between">
                                 <div>
                                     <p className="text-gray-400 text-sm mb-1">Account Price</p>
                                     <h2 className="text-5xl font-bold text-white">৳{accountData.price.toLocaleString()}</h2>
                                 </div>
-                                <button className="bg-white text-black px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all flex items-center gap-2 shadow-lg">
+                                <button className="bg-white text-black px-8 py-3.5 rounded font-bold text-lg hover:bg-gray-100 transition-all flex items-center gap-2 cursor-pointer active:scale-95">
                                     <ShoppingCart size={24} />
                                     Buy Now
                                 </button>
@@ -148,31 +147,31 @@ const AccountDetailsPage = () => {
                         </div>
 
                         {/* Description */}
-                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                        <div className="bg-gray-50 rounded-sm p-6 border border-gray-200">
                             <h3 className="text-xl font-bold text-black mb-3">Description</h3>
                             <p className="text-gray-700 leading-relaxed">{accountData.description}</p>
                         </div>
 
                         {/* Key Stats */}
-                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                        <div className="bg-gray-50 rounded-sm p-6 border border-gray-200">
                             <h3 className="text-xl font-bold text-black mb-4 flex items-center gap-2">
                                 <Award className="text-black" />
                                 Account Stats
                             </h3>
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="bg-white rounded-xl p-4 border border-gray-200">
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
                                     <p className="text-gray-600 text-sm mb-1">Level</p>
                                     <p className="text-3xl font-bold text-black">{accountData.level}</p>
                                 </div>
-                                <div className="bg-white rounded-xl p-4 border border-gray-200">
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
                                     <p className="text-gray-600 text-sm mb-1">Evo Guns</p>
                                     <p className="text-3xl font-bold text-black">{accountData.evo_gun}</p>
                                 </div>
-                                <div className="bg-white rounded-xl p-4 border border-gray-200">
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
                                     <p className="text-gray-600 text-sm mb-1">Diamonds claimable</p>
                                     <p className="text-3xl font-bold text-black">{accountData.diamond_claimable}</p>
                                 </div>
-                                <div className="bg-white rounded-xl p-4 border border-gray-200">
+                                <div className="bg-white rounded-lg p-4 border border-gray-200">
                                     <p className="text-gray-600 text-sm mb-1">Emotes</p>
                                     <p className="text-3xl font-bold text-black">{accountData.total_emote}</p>
                                 </div>
@@ -180,7 +179,7 @@ const AccountDetailsPage = () => {
                         </div>
 
                         {/* Detailed Items */}
-                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
+                        <div className="bg-gray-50 rounded-sm p-6 border border-gray-200">
                             <h3 className="text-xl font-bold text-black mb-4 flex items-center gap-2">
                                 <Zap className="text-black" />
                                 Item Collection
@@ -214,7 +213,7 @@ const AccountDetailsPage = () => {
                         </div>
 
                         {/* Premium Items */}
-                        <div className="bg-gray-900 rounded-2xl p-6 border border-gray-700">
+                        <div className="bg-gray-900 rounded-sm p-6 border border-gray-700">
                             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                                 <Shield className="text-white" />
                                 Premium Items
@@ -255,7 +254,7 @@ const AccountDetailsPage = () => {
                         </div>
 
                         {/* Security Badge */}
-                        <div className="bg-gray-100 border border-gray-300 rounded-xl p-4 flex items-center gap-3">
+                        <div className="bg-gray-100 border border-gray-300 rounded-sm p-4 flex items-center gap-3">
                             <Shield className="text-black" size={32} />
                             <div>
                                 <p className="text-black font-semibold">Secure Transaction</p>
