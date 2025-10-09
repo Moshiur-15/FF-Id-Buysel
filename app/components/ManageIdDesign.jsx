@@ -1,26 +1,46 @@
 'use client'
 import { useState } from 'react';
 import { Edit, Trash2, MoreVertical } from 'lucide-react';
+import axios from 'axios';
+import Link from 'next/link'
 
-const ManageIdDesign = ({ accounts }) => {
-
+const ManageIdDesign = ({ accounts, setIds, Ids }) => {
     const [openMenuId, setOpenMenuId] = useState(null);
 
-    const handleStatusChange = (id, newStatus) => {
-        console.log("New Status:", newStatus);
+    const handleStatusChange = async(id, newStatus) => {
+        try{
+            const res = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}api/status`, {
+                id,
+                newStatus
+            })
+
+            setIds((prev)=>
+                prev.map(item=>
+                    item?._id === id ? res.data.updatedData :  item
+                )
+            )
+
+            alert(res?.data?.message);
+        }
+        catch(err){
+            console.log(err);
+            return
+        }
     };
 
     const toggleMenu = (id) => {
         setOpenMenuId(openMenuId === id ? null : id);
     };
 
-    const handleEdit = (id) => {
-        console.log('Edit account:', id);
-        setOpenMenuId(null);
-    };
-
-    const handleDelete = (id) => {
-        console.log('Delete account:', id);
+    const handleDelete = async (id) => {
+        try {
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id/${id}`)
+            setIds(Ids.filter(item => item._id !== id));
+            alert(res?.data?.message)
+        }
+        catch (err) {
+            console.log(err);
+        }
         setOpenMenuId(null);
     };
 
@@ -78,8 +98,8 @@ const ManageIdDesign = ({ accounts }) => {
                                                     value={account?.status}
                                                     onChange={(e) => handleStatusChange(account._id, e.target.value)}
                                                     className={`px-3 py-1 rounded-full text-xs font-semibold border outline-none cursor-pointer ${account.status === "available"
-                                                            ? "bg-green-100 text-green-800 border-green-300"
-                                                            : "bg-red-100 text-red-800 border-red-300"
+                                                        ? "bg-green-100 text-green-800 border-green-300"
+                                                        : "bg-red-100 text-red-800 border-red-300"
                                                         }`}
                                                 >
                                                     <option value="available">Available</option>
@@ -97,13 +117,14 @@ const ManageIdDesign = ({ accounts }) => {
 
                                                     {openMenuId === account._id && (
                                                         <div className="absolute right-0 top-12 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-40">
-                                                            <button
-                                                                onClick={() => handleEdit(account._id)}
+                                                            <Link
+                                                                href={`/dashboard/manage-ids/${account._id}`}
+
                                                                 className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                                                             >
                                                                 <Edit className="w-4 h-4 text-blue-600" />
                                                                 <span>Edit</span>
-                                                            </button>
+                                                            </Link>
                                                             <button
                                                                 onClick={() => handleDelete(account._id)}
                                                                 className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100"

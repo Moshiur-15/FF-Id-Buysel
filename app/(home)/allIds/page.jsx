@@ -1,65 +1,19 @@
 'use client'
-import { useState } from 'react';
-import { Star, Zap, Award, ShoppingCart, Check, Info } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useEffect, useState } from 'react';
 import IdCard from '@/app/components/IdCard';
+import GetData from '@/app/components/Api/page';
 
 
 const page = () => {
-    const [accounts] = useState([
-        {
-            _id: 1,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "sold"
-        },
-        {
-            _id: 2,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "Available"
-        }, {
-            _id: 3,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "Available"
-        }, {
-            _id: 4,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "Available"
-        }, {
-            _id: 5,
-            name: "RAJ GAMER",
-            description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-            uid: 982374610,
-            price: 15000,
-            level: 78,
-            total_volt: 12,
-            image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-            status: "Available"
-        },
-    ]);
+
+    const [Ids, setIds] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const Ids = await GetData();
+            setIds(Ids);
+        };
+        fetchData();
+    }, []);
 
     return (
         <div className="bg-white text-black min-h-screen p-8 container mx-auto">
@@ -78,7 +32,7 @@ const page = () => {
                 </div>
             </section>
 
-            <IdCard accounts={accounts} />
+            <IdCard accounts={Ids} />
         </div>
     );
 };

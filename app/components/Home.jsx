@@ -1,8 +1,9 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Zap, Shield, Users, Star, ChevronDown, MessageCircle, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 import IdCard from './IdCard';
+import GetData from './Api/page';
 
 
 const Home = () => {
@@ -30,60 +31,15 @@ const Home = () => {
       answer: "We accept major credit cards, PayPal, bank transfers, and popular digital wallets. All payments are processed securely through our platform."
     }
   ];
-  const [accounts] = useState([
-    {
-      _id: 1,
-      name: "RAJ GAMER",
-      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-      uid: 982374610,
-      price: 15000,
-      level: 78,
-      total_volt: 12,
-      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop",
-      status: "sold"
-    },
-    {
-      _id: 2,
-      name: "RAJ GAMER",
-      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-      uid: 982374610,
-      price: 15000,
-      level: 78,
-      total_volt: 12,
-      image: "/563dd4c11d7f61ef99c1b8d1892bd759.jpg",
-      status: "Available"
-    }, {
-      _id: 3,
-      name: "RAJ GAMER",
-      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-      uid: 982374610,
-      price: 15000,
-      level: 78,
-      total_volt: 12,
-      image: "/563dd4c11d7f61ef99c1b8d1892bd759.jpg",
-      status: "Available"
-    }, {
-      _id: 4,
-      name: "RAJ GAMER",
-      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-      uid: 982374610,
-      price: 15000,
-      level: 78,
-      total_volt: 12,
-      image: "/563dd4c11d7f61ef99c1b8d1892bd759.jpg",
-      status: "Available"
-    }, {
-      _id: 5,
-      name: "RAJ GAMER",
-      description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS.",
-      uid: 982374610,
-      price: 15000,
-      level: 78,
-      total_volt: 12,
-      image: "/563dd4c11d7f61ef99c1b8d1892bd759.jpg",
-      status: "Available"
-    },
-  ]);
+
+  const [Ids, setIds] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const Ids = await GetData();
+      setIds(Ids);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -117,7 +73,9 @@ const Home = () => {
           </div>
 
           <div>
-            <IdCard accounts={accounts} />
+            {Ids.length === 0 ? <div>
+              <h2 className='text-2xl flex justify-center items-center text-red-500 font-bold h-80 border'>Data Not Found...</h2>
+            </div> : <IdCard accounts={Ids} />}
           </div>
         </div>
       </section>
@@ -143,7 +101,6 @@ const Home = () => {
                 className="rounded shadow w-full"
               />
             </div>
-{/* md:h-[450px] lg:h-[350px] xl:h-[400px] object-cover */}
             {/* Right Side FAQ */}
             <div className="space-y-4 md:w-1/2">
               {faqs.map((faq, index) => (

@@ -7,10 +7,9 @@ export async function PUT(req, { params }) {
     await connectToDatabase();
 
     const { id } = await params;
-    const newId = await req.json();
-    console.log("new id = ", newId);
+    const data = await req.json();
 
-    const updated = await AddId.findByIdAndUpdate(id, newId, { new: true });
+    const updated = await AddId.findByIdAndUpdate(id, data, { new: true });
     if (!updated) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
@@ -36,5 +35,21 @@ export async function DELETE(req, { params }) {
     return NextResponse.json({ message: "Id deleted successfully", deleteData: deletedId }, { status: 200 });
   } catch (error) {
     return NextResponse.json("Failed to delete Id", { status: 500 });
+  }
+}
+
+export async function GET(req, {params}) {
+  try {
+    await connectToDatabase();
+    const { id } = await params;
+    const data = await AddId.findOne({_id: id});
+    if (!data) {
+      return NextResponse.json("Id not found", { status: 404 });
+    }
+    return NextResponse.json({ message: "Get Id successfully", data }, { status: 200 });
+  }
+  catch (err) {
+    console.log(err);
+    return NextResponse.json("Failed to Get Id", { status: 500 });
   }
 }

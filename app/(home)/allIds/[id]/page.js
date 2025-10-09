@@ -1,53 +1,40 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ShoppingCart, Star, Shield, Zap, Award, Eye, Heart, Share2 } from 'lucide-react';
+import axios from 'axios';
 
-const AccountDetailsPage = () => {
+
+const AccountDetailsPage = ({ params }) => {
     const [selectedImage, setSelectedImage] = useState(0);
     const [isFavorite, setIsFavorite] = useState(false);
+    const id = React.use(params).id;
 
-    const accountData = {
-        _id: 1,
-        name: "RAJ GAMER",
-        description: "TOP PLAYER WITH MAXED EVO GUN AND PREMIUM ITEMS. This account is one of the best in the region, featuring a high level and a wide range of exclusive items. With 5 Evo Guns, including 1 Evo Max, you’ll dominate every match. The account comes with 1200 Volt, 200 Masks, 150 Heroes, and 7 Panths, ensuring you stand out in every lobby. Enjoy 35 unique emotes, the legendary Dragon Fury animation, and the rare Phoenix Skywing. Secure 1000 claimable diamonds for future upgrades. All images and a preview video are included for your review. Verified and safe for instant purchase. Don’t miss out on this premium opportunity to own a top-tier gaming account with all the best features, items, and security. Perfect for competitive players and collectors alike. Buy now and elevate your gameplay experience to the next level with RAJ GAMER’s exclusive account.",
-        uid: 982374610,
-        price: 15000,
-        level: 78,
-        evo_gun: 5,
-        evo_max: 1,
-        total_volt: 1200,
-        total_mask: 200,
-        total_here: 150,
-        total_panth: 7,
-        total_emote: 35,
-        animation: [
-            "DRAGON FURY",
-            "PHOENIX STRIKE",
-            "TIGER CLAW",
-            "LION ROAR",
-            "SHADOW SLASH",
-            "FIRE STORM"
-        ],
-        skywing: [
-            "PHOENIX SKYWING",
-            "DRAGON WING",
-            "EAGLE FLARE",
-            "TIGER SKY",
-            "GOLDEN WING"
-        ],
-        diamond_claimable: 1000,
-        diamond: 100,
-        images: [
-            "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800",
-            "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800",
-            "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800",
-            "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800",
-            "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800",
-            
-        ],
-        video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-    };
+    const [accountData, setAccount] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
+    useEffect(() => {
+        if (!id) return;
+
+        const fetchAccount = async () => {
+            try {
+                setLoading(true);
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/add-id/${id}`);
+                setAccount(res.data.data);
+            } catch (err) {
+                console.error('Error fetching account:', err);
+                setError('Failed to fetch account data.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAccount();
+    }, [id]);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+    if (!accountData) return <p>No data found</p>;
     return (
         <div className="min-h-screen bg-white">
             <div className="container mx-auto p-9 my-6">
@@ -84,13 +71,20 @@ const AccountDetailsPage = () => {
                         {/* Main Image/Video Display */}
                         <div className="bg-gray-50 rounded-sm overflow-hidden border border-gray-200">
                             <div className="aspect-video bg-gray-100">
-                                <img
-                                    src={accountData.images[selectedImage]}
-                                    alt={accountData.name}
-                                    className="w-full h-full object-cover"
-                                />
+                                {accountData?.images?.length > 0 ? (
+                                    <img
+                                        src={accountData.images[selectedImage]}
+                                        alt={accountData.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="flex items-center justify-center h-full text-gray-400">
+                                        No Image Available
+                                    </div>
+                                )}
                             </div>
                         </div>
+
 
                         {/* Thumbnail Gallery */}
                         <div className="grid grid-cols-5 gap-3">
@@ -107,9 +101,8 @@ const AccountDetailsPage = () => {
                                 </button>
                             ))}
                         </div>
-
                         {/* Video Section */}
-                        {accountData.video && (
+                        {accountData?.video && (
                             <div className="bg-gray-50 rounded-sm overflow-hidden border border-gray-200">
                                 <div className="p-4 border-b border-gray-200">
                                     <h3 className="text-black font-semibold flex items-center gap-2">
@@ -119,7 +112,7 @@ const AccountDetailsPage = () => {
                                 </div>
                                 <div className="aspect-video">
                                     <iframe
-                                        src={accountData.video}
+                                        src={accountData.video} // ensure it's in embed format
                                         className="w-full h-full"
                                         allowFullScreen
                                         title="Account Preview"
@@ -127,6 +120,7 @@ const AccountDetailsPage = () => {
                                 </div>
                             </div>
                         )}
+
                     </div>
 
                     {/* Right Column - Details */}
@@ -165,15 +159,15 @@ const AccountDetailsPage = () => {
                                 </div>
                                 <div className="bg-white rounded-lg p-4 border border-gray-200">
                                     <p className="text-gray-600 text-sm mb-1">Evo Guns</p>
-                                    <p className="text-3xl font-bold text-black">{accountData.evo_gun}</p>
+                                    <p className="text-3xl font-bold text-black">{accountData.evoGun}</p>
                                 </div>
                                 <div className="bg-white rounded-lg p-4 border border-gray-200">
                                     <p className="text-gray-600 text-sm mb-1">Diamonds claimable</p>
-                                    <p className="text-3xl font-bold text-black">{accountData.diamond_claimable}</p>
+                                    <p className="text-3xl font-bold text-black">{accountData.diamondClaimable}</p>
                                 </div>
                                 <div className="bg-white rounded-lg p-4 border border-gray-200">
                                     <p className="text-gray-600 text-sm mb-1">Emotes</p>
-                                    <p className="text-3xl font-bold text-black">{accountData.total_emote}</p>
+                                    <p className="text-3xl font-bold text-black">{accountData.totalEmote}</p>
                                 </div>
                             </div>
                         </div>
@@ -187,23 +181,23 @@ const AccountDetailsPage = () => {
                             <div className="space-y-3">
                                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                     <span className="text-gray-700">Total Volt</span>
-                                    <span className="text-black font-bold">{accountData.total_volt}</span>
+                                    <span className="text-black font-bold">{accountData.totalVolt}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                     <span className="text-gray-700">Total Mask</span>
-                                    <span className="text-black font-bold">{accountData.total_mask}</span>
+                                    <span className="text-black font-bold">{accountData.totalMask}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                     <span className="text-gray-700">Total Heroes</span>
-                                    <span className="text-black font-bold">{accountData.total_here}</span>
+                                    <span className="text-black font-bold">{accountData.totalHere}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                     <span className="text-gray-700">Total Panth</span>
-                                    <span className="text-black font-bold">{accountData.total_panth}</span>
+                                    <span className="text-black font-bold">{accountData.totalPanth}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                     <span className="text-gray-700">Evo Max</span>
-                                    <span className="text-black font-bold">{accountData.evo_max}</span>
+                                    <span className="text-black font-bold">{accountData.evoMax}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                     <span className="text-gray-700">diamond</span>
@@ -223,14 +217,17 @@ const AccountDetailsPage = () => {
                                 <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
                                     <p className="text-gray-400 text-sm">Animations</p>
                                     <div className="flex flex-wrap gap-2 mt-2">
-                                        {accountData.animation.map((anim, index) => (
+                                        <h2 className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">{accountData?.animation}</h2>
+
+                                        {/* {accountData.animation.map((anim, index) => (
                                             <span
                                                 key={index}
                                                 className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium"
                                             >
                                                 {anim}
                                             </span>
-                                        ))}
+                                        ))} */}
+
                                     </div>
                                 </div>
 
@@ -238,19 +235,20 @@ const AccountDetailsPage = () => {
                                 <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
                                     <p className="text-gray-400 text-sm">Skywing</p>
                                     <div className="flex flex-wrap gap-2 mt-2">
-                                        {accountData.skywing.map((item, index) => (
+                                        <h2 className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">{accountData?.skywing}</h2>
+
+                                        {/* {accountData.skywing.map((item, index) => (
                                             <span
                                                 key={index}
                                                 className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium"
                                             >
                                                 {item}
                                             </span>
-                                        ))}
+                                        ))} */}
                                     </div>
                                 </div>
 
                             </div>
-
                         </div>
 
                         {/* Security Badge */}
