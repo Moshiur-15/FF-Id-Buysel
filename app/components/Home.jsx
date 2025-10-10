@@ -4,6 +4,7 @@ import { Zap, Shield, Users, Star, ChevronDown, MessageCircle, Mail, Phone } fro
 import Link from 'next/link';
 import IdCard from './IdCard';
 import GetData from './Api/page';
+import { Spinner } from '@/components/ui/spinner';
 
 
 const Home = () => {
@@ -33,10 +34,22 @@ const Home = () => {
   ];
 
   const [Ids, setIds] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
-      const Ids = await GetData();
-      setIds(Ids);
+      try {
+        setLoading(true);
+        const Ids = await GetData();
+        setIds(Ids);
+      }
+      catch (err) {
+        console.log(err);
+        setIds([]);
+      }
+      finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, []);
@@ -73,10 +86,25 @@ const Home = () => {
           </div>
 
           <div>
-            {Ids.length === 0 ? <div>
-              <h2 className='text-2xl flex justify-center items-center text-red-500 font-bold h-80 border'>Data Not Found...</h2>
-            </div> : <IdCard accounts={Ids} />}
+            {loading ? (
+              <Spinner />
+            ) : Ids.length === 0 ? (
+              <div>
+                <h2 className="text-2xl flex justify-center items-center text-red-500 font-bold h-80 border">
+                  Data Not Found...
+                </h2>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {Ids.slice().reverse().slice(0, 6)?.map(account => (
+                  <div key={account._id}>
+                    <IdCard account={account} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
         </div>
       </section>
 

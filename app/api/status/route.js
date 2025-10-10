@@ -17,3 +17,16 @@ export async function PATCH(req) {
         return NextResponse.json({ error: "Server Error~" }), { status: 500 };
     }
 }
+
+export async function POST(req) {
+    try{
+        await connectToDatabase();
+        const body = await req.json();
+        const data = await AddId.create(body)
+        return NextResponse.json({ message: "Status Updated Successfully!", data }, { status: 200 })
+    }
+    catch(err){
+        console.log(err);
+        return NextResponse.json({ error: "Server Error~" }), { status: 500 };
+    }    
+}
