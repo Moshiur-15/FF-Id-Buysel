@@ -68,7 +68,7 @@ const Page = () => {
 
   const handleSubmit = async () => {
     try{
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id`, formData);
+      const res = await axios.post('/api/add-id', formData);
       console.log('Response:', res.data);
       alert("ID added successfully!");
       if(res.status !== 200){

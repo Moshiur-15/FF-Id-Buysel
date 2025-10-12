@@ -10,7 +10,8 @@ export async function POST(req) {
         return NextResponse.json({message: "IDS Added successfully"}, {status: 200});
     }
     catch(error){
-        return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+        console.error('POST /api/add-id error:', error);
+        return NextResponse.json({error: "Internal Server Error", details: error.message}, {status: 500});
     }
 }
 
@@ -21,6 +22,7 @@ export async function GET(req) {
     return NextResponse.json( data , {status: 200});
   }
   catch(error){
-    return NextResponse.json({error: "Internal Server Error"}, {status: 500});
+    console.error('GET /api/add-id error:', error);
+    return NextResponse.json({error: "Internal Server Error", details: error.message}, {status: 500});
   }
 }
