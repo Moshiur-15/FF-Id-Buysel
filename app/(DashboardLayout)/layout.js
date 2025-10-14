@@ -1,20 +1,22 @@
-'use client'
+'use client';
 import React from 'react';
-import { AppSidebar } from "@/components/app-sidebar"
-import { Separator } from "@/components/ui/separator"
+import { AppSidebar } from "@/components/app-sidebar";
+import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import { Home } from 'lucide-react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-const layout = ({ children }) => {
-  const { data } = useSession()
+
+const Layout = ({ children }) => {
+  const { data } = useSession();
+
   return (
     <>
-      {data?.user?.role === 'admin' && <>
+      {data?.user?.role === 'admin' && (
         <div>
           <SidebarProvider>
             <AppSidebar />
@@ -31,7 +33,7 @@ const layout = ({ children }) => {
 
                 {/* Right Section */}
                 <div className="flex items-center gap-3">
-                  <Link href='/' ><Home className="text-gray-600 hover:text-black" /></Link>
+                  <Link href="/"><Home className="text-gray-600 hover:text-black" /></Link>
                   <img
                     src="/563dd4c11d7f61ef99c1b8d1892bd759.jpg"
                     alt="logo"
@@ -45,12 +47,11 @@ const layout = ({ children }) => {
                 {children}
               </div>
             </SidebarInset>
-
           </SidebarProvider>
         </div>
-      </>}
+      )}
     </>
   );
 };
 
-export default layout;
+export default Layout;
