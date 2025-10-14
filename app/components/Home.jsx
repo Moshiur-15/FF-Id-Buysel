@@ -5,10 +5,16 @@ import Link from 'next/link';
 import IdCard from './IdCard';
 import GetData from './Api/page';
 import { Spinner } from '@/components/ui/spinner';
+import CarouselBackground from './CarouselBackground';
+import { Button } from '@/components/ui/button';
+import { useSession } from 'next-auth/react';
+
 
 
 const Home = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
+  const {data } = useSession()
+  console.log(data);
 
   const faqs = [
     {
@@ -57,25 +63,38 @@ const Home = () => {
   return (
     <div className="min-h-screen">
 
+
       {/* Banner/Hero Section */}
-      <section id="home" className="relative overflow-hidden bg-white">
-        <div className="px-4 sm:px-6 lg:px-8 py-24">
+      <section id="home" className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        {/* Carousel Background */}
+        <div className="absolute inset-0">
+          <CarouselBackground />
+        </div>
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/50" />
+
+        {/* Content */}
+        <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-32 md:py-40">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-black mb-6">
-              Buy & Sell
-              <span className="text-black"> Free Fire IDs</span>
+            <h1 className="text-4xl md:text-7xl font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_4px_15px_rgba(59,130,246,0.4)]">
+              Rezvi Buy & Sell
+              <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-600 mt-2 border-b-4 border-indigo-500 inline-block">
+                FREE FIRE IDs
+              </span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-lg lg:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto drop-shadow-lg">
               The most trusted marketplace for Free Fire accounts. Find high-rank IDs with rare skins, diamonds, and exclusive items.
             </p>
-            <Link href='/allIds' className="">
-              <button className="bg-black text-white px-9 py-2.5 rounded font-medium text-lg hover:bg-gray-800 active:scale-95 duration-300">
-                Browse IDs
-              </button>
+            <Link href='/allIds'>
+              <Button className="px-10 py-6 font-semibold text-lg rounded-none bg-gray-600 hover:cursor-pointer active:scale-95">
+                Browse IDs Now
+              </Button>
             </Link>
           </div>
         </div>
       </section>
+
 
       {/* Recent IDs */}
       <section id="recent" className="py-16 bg-gray-100">
@@ -104,6 +123,12 @@ const Home = () => {
               </div>
             )}
           </div>
+
+          <Link href='/allIds'>
+            <button className='mt-10 text-nowrap active:scale-95 px-10 py-1.5 mx-auto border-none rounded-none flex justify-center items-center cursor-pointer shadow-[inset_0_0_10px_rgba(100,130,246,0.9)] hover:inset-shadow-none transition-all duration-700 hover:bg-gray-300 font-bold'>
+              View All Ids
+            </button>
+          </Link>
 
         </div>
       </section>
@@ -157,6 +182,11 @@ const Home = () => {
           </div>
         </div>
       </section>
+      
+      <div className="absolute inset-0">
+        <div className="absolute top-2/3 left-3/4 w-72 h-72 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-indigo-600/30 rounded-full blur-3xl animate-pulse delay-2000"></div>
+      </div>
     </div>
   );
 };

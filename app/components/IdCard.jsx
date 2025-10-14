@@ -96,14 +96,13 @@ const IdCard = ({ account }) => {
 
                         {/* Buy Button */}
                         <div className='border-t pt-6'>
-                            <Button onClick={handleClick} variant="outline" size="sm" className="cursor-pointer flex justify-center items-center gap-2 hover:bg-slate-800 hover:text-white duration-300 rounded-none active:scale-95 absolute bottom-0 left-0 border-t border-r border-gray-200 border-b-0 border-l-0">
-
+                            <Button onClick={handleClick} variant="outline" size="sm" className="cursor-pointer flex justify-center items-center gap-2 hover:bg-slate-800 hover:text-white rounded-none active:scale-95 absolute bottom-0 left-0 border-t border-r border-gray-200 border-b-0 border-l-0 duration-700">
                                 <ShoppingCart className="h-5 w-5" />
                                 Buy Now
                             </Button>
 
                             <Link href={`/allIds/${account._id}`} className="">
-                                <Button variant="outline" size="sm" className="cursor-pointer flex justify-center items-center gap-2 hover:bg-slate-800 hover:text-white duration-300 rounded-none active:scale-95 absolute bottom-0 right-0 border-t border-l border-gray-200 border-b-0 border-r-0">
+                                <Button variant="outline" size="sm" className="cursor-pointer flex justify-center items-center gap-2 hover:bg-slate-800 hover:text-white duration-700 rounded-none active:scale-95 absolute bottom-0 right-0 border-t border-l border-gray-200 border-b-0 border-r-0">
                                     <Info className="h-5 w-5" />
                                     Details
                                 </Button>

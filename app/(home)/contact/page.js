@@ -1,27 +1,39 @@
 'use client';
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Mail, Phone, Send } from 'lucide-react';
 
 export default function ContactPage() {
+    const form = useRef();
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        subject: '',
-        message: ''
+        message: '',
     });
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const sendEmail = (e) => {
         e.preventDefault();
-        console.log(formData);
-        alert('Form submitted! (This is a demo)');
-        setFormData({ name: '', email: '', subject: '', message: '' });
+
+        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, {
+            publicKey: 'YOUR_PUBLIC_KEY',
+        })
+            .then(
+                () => {
+                    console.log('SUCCESS!');
+                    alert('Message sent successfully!');
+                    setFormData({ name: '', email: '', message: '' });
+                },
+                (error) => {
+                    console.log('FAILED...', error.text);
+                    alert('Failed to send message. Please try again.');
+                },
+            );
     };
 
     return (
@@ -74,15 +86,19 @@ export default function ContactPage() {
 
                         {/* Decorative Element */}
                         <div className="hidden md:block mt-12 pt-12 border-t border-gray-200">
-                            <div className="w-32 h-32 bg-black rounded-full">
-                                <img src="/563dd4c11d7f61ef99c1b8d1892bd759.jpg" alt="Decorative Element" className="w-full h-full object-cover rounded-full" />
+                            <div className="w-32 h-32 bg-black rounded-full overflow-hidden">
+                                <img
+                                    src="/563dd4c11d7f61ef99c1b8d1892bd759.jpg"
+                                    alt="Decorative Element"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
                         </div>
                     </div>
 
                     {/* Contact Form */}
                     <div className="bg-gray-50 p-8 md:p-10 rounded-2xl">
-                        <div className="space-y-6">
+                        <form ref={form} onSubmit={sendEmail} className="space-y-6">
                             <div>
                                 <label className="block text-sm font-semibold mb-2 text-black">
                                     Full Name
@@ -94,6 +110,7 @@ export default function ContactPage() {
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
                                     placeholder="John Doe"
+                                    required
                                 />
                             </div>
 
@@ -108,20 +125,7 @@ export default function ContactPage() {
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
                                     placeholder="john@example.com"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-semibold mb-2 text-black">
-                                    Subject
-                                </label>
-                                <input
-                                    type="text"
-                                    name="subject"
-                                    value={formData.subject}
-                                    onChange={handleChange}
-                                    className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
-                                    placeholder="How can we help?"
+                                    required
                                 />
                             </div>
 
@@ -136,17 +140,18 @@ export default function ContactPage() {
                                     rows="5"
                                     className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors resize-none"
                                     placeholder="Tell us more about your inquiry..."
+                                    required
                                 ></textarea>
                             </div>
 
                             <button
-                                onClick={handleSubmit}
+                                type="submit"
                                 className="w-full bg-black text-white py-4 px-6 font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2 group"
                             >
                                 <span>Send Message</span>
                                 <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

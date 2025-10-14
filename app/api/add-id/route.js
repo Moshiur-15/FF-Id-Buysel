@@ -4,10 +4,22 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
     try{
+        // Check if MongoDB URI exists
+        if (!process.env.MONGODB_URI) {
+            console.error('MONGODB_URI environment variable is not set');
+            return NextResponse.json({error: "Database configuration error"}, {status: 500});
+        }
+
         await connectToDatabase();
         const data = await req.json();
-        await AddId.create(data);
-        return NextResponse.json({message: "IDS Added successfully"}, {status: 200});
+        
+        // Validate required fields
+        if (!data.name || !data.uid) {
+            return NextResponse.json({error: "Name and UID are required"}, {status: 400});
+        }
+        
+        const newId = await AddId.create(data);
+        return NextResponse.json({message: "IDS Added successfully", id: newId._id}, {status: 200});
     }
     catch(error){
         console.error('POST /api/add-id error:', error);
