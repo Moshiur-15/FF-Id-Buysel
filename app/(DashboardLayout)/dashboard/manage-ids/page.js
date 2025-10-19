@@ -1,5 +1,5 @@
 "use client";
-import GetData from '@/app/components/Api/page';
+import axios from 'axios';
 import React, { useEffect, useState, Suspense } from 'react';
 const ManageIdDesign = React.lazy(() => import('@/app/components/ManageIdDesign'));
 
@@ -7,8 +7,8 @@ const ManageId = () => {
     const [Ids, setIds] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const Ids = await GetData();
-            setIds(Ids);
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id`);
+            setIds(response.data);
         };
         fetchData();
     }, []);

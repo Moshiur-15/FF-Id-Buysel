@@ -21,7 +21,7 @@ const IdCard = ({ account }) => {
                     {/* Image Section */}
                     <div className="relative h-56 overflow-hidden">
                         <img
-                            src={account.images[0]}
+                            src={account.images[0] || 'https://i.ibb.co.com/8nFV1RZY/white-bokeh-lights-background.webp'}
                             alt={account.name}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />

@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Zap, Shield, Users, Star, ChevronDown, MessageCircle, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 import IdCard from './IdCard';
-import GetData from './Api/page';
 import { Spinner } from '@/components/ui/spinner';
 import CarouselBackground from './CarouselBackground';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
+import axios from 'axios';
 
 
 
@@ -46,8 +46,8 @@ const Home = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const Ids = await GetData();
-        setIds(Ids);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id`);
+        setIds(response.data);
       }
       catch (err) {
         console.log(err);

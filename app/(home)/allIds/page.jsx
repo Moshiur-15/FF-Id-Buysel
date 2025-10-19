@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react';
 import IdCard from '@/app/components/IdCard';
-import GetData from '@/app/components/Api/page';
 import { Spinner } from '@/components/ui/spinner';
+import axios from 'axios';
 
 
 const page = () => {
@@ -14,8 +14,8 @@ const page = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const Ids = await GetData();
-                setIds(Ids);
+                const response = await axios.get(`api/add-id`);
+                setIds(response.data);
             }
             catch (err) {
                 console.log(err);
@@ -56,7 +56,7 @@ const page = () => {
                     </div>
                 ) : (
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {Ids.slice().reverse().map(account => (
+                        {Ids.slice().reverse()?.map(account => (
                             <div key={account._id}>
                                 <IdCard account={account} />
                             </div>

@@ -73,7 +73,7 @@ const AccountDetailsPage = ({ params }) => {
                                         <div className="aspect-video bg-gray-100">
                                             {accountData?.images?.length > 0 ? (
                                                 <img
-                                                    src={accountData.images[selectedImage]}
+                                                    src={accountData.images[selectedImage] ||'https://i.ibb.co.com/8nFV1RZY/white-bokeh-lights-background.webp'}
                                                     alt={accountData.name}
                                                     className="w-full h-full object-cover"
                                                 />
