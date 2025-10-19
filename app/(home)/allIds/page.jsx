@@ -27,7 +27,7 @@ const page = () => {
         };
         fetchData();
     }, []);
-
+    console.log(Ids);
     return (
         <div className="bg-white text-black min-h-screen p-8 container mx-auto">
             <section className='flex flex-col text-center py-6 md:py-8 lg:py-12'>

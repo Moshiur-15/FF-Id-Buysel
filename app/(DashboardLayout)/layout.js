@@ -13,10 +13,13 @@ import { useSession } from 'next-auth/react';
 
 const Layout = ({ children }) => {
   const { data } = useSession();
+  if (!data) {
+  return <div>Loading...</div>;
+}
 
   return (
     <>
-      {data?.user?.role === 'admin' && (
+      {/* {data?.user?.role === 'admin' && ( */}
         <div>
           <SidebarProvider>
             <AppSidebar />
@@ -49,7 +52,7 @@ const Layout = ({ children }) => {
             </SidebarInset>
           </SidebarProvider>
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };
