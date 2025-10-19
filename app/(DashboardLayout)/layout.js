@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      {/* {data?.user?.role === 'admin' && ( */}
+      {data?.user?.role === 'admin' && (
         <div>
           <SidebarProvider>
             <AppSidebar />
@@ -52,7 +52,7 @@ const Layout = ({ children }) => {
             </SidebarInset>
           </SidebarProvider>
         </div>
-      {/* )} */}
+      )}
     </>
   );
 };
