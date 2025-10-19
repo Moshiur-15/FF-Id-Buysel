@@ -20,7 +20,7 @@ const AccountDetailsPage = ({ params }) => {
         const fetchAccount = async () => {
             try {
                 setLoading(true);
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/add-id/${id}`);
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id/${id}`);
                 setAccount(res.data.data);
             } catch (err) {
                 console.error('Error fetching account:', err);
