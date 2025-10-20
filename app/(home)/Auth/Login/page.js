@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 import { signIn } from "next-auth/react";
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 export default function AuthPages() {
     const [showPassword, setShowPassword] = useState(false);
@@ -18,11 +20,15 @@ export default function AuthPages() {
         const data = { name, email, password };
         try {
             await axios.post('/api/user', data)
-            alert('User Created Successfully!')
+            toast.success('User Created Successfully!')
+            setTimeout(() => {
+                setIsLogin(true);
+                toast.success('Please Login to your account!')
+            }, 1000);
         }
         catch (err) {
             console.log(err)
-            alert(err.message)
+            toast.error(err.message)
         }
         finally {
             setRegLoading(false)

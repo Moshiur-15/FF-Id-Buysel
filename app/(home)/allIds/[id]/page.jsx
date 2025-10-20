@@ -32,6 +32,14 @@ const AccountDetailsPage = ({ params }) => {
 
         fetchAccount();
     }, [id]);
+    
+    const handleClick = () => {
+        const phoneNumber = process.env.NEXT_PUBLIC_NUMBER;
+        const message = encodeURIComponent("Hello! I want to buy this Free Fire ID.");
+        const url = `https://wa.me/${phoneNumber}?text=${message}`;
+        window.open(url, "_blank");
+    };
+
     if (error) return <p>{error}</p>;
     return (
         <div className="min-h-screen bg-white">
@@ -73,7 +81,7 @@ const AccountDetailsPage = ({ params }) => {
                                         <div className="aspect-video bg-gray-100">
                                             {accountData?.images?.length > 0 ? (
                                                 <img
-                                                    src={accountData.images[selectedImage] ||'https://i.ibb.co.com/8nFV1RZY/white-bokeh-lights-background.webp'}
+                                                    src={accountData.images[selectedImage] || 'https://i.ibb.co.com/8nFV1RZY/white-bokeh-lights-background.webp'}
                                                     alt={accountData.name}
                                                     className="w-full h-full object-cover"
                                                 />
@@ -133,7 +141,7 @@ const AccountDetailsPage = ({ params }) => {
                                                 <p className="text-gray-400 text-sm mb-1">Account Price</p>
                                                 <h2 className="text-5xl font-bold text-white">৳{accountData.price.toLocaleString()}</h2>
                                             </div>
-                                            <button className="bg-white text-black px-8 py-3.5 rounded font-bold text-lg hover:bg-gray-100 transition-all flex items-center gap-2 cursor-pointer active:scale-95">
+                                            <button onClick={handleClick} className="bg-white text-black px-8 py-3.5 rounded font-bold text-lg hover:bg-gray-100 transition-all flex items-center gap-2 cursor-pointer active:scale-95">
                                                 <ShoppingCart size={24} />
                                                 Buy Now
                                             </button>

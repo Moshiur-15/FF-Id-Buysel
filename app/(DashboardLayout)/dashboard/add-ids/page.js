@@ -1,6 +1,7 @@
 'use client'
 import axios from 'axios';
 import { useState } from 'react';
+import { toast } from 'sonner';
 const Page = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -60,7 +61,7 @@ const Page = () => {
       }));
     } catch (error) {
       console.error("Image upload failed:", error);
-      alert("Image upload failed!");
+      toast.error("Image upload failed!");
     } finally {
       setUploading(false);
     }
@@ -69,15 +70,14 @@ const Page = () => {
   const handleSubmit = async () => {
     try{
       const res = await axios.post('/api/add-id', formData);
-      console.log('Response:', res.data);
-      alert("ID added successfully!");
+      toast.success("ID added successfully!");
       if(res.status !== 200){
-        alert("Failed to add ID. Please try again.");
+        toast.error("Failed to add ID. Please try again.");
         return;
       }
     }
     catch(error){
-      alert("Failed to add ID. Please try again.");
+      toast.error("Failed to add ID. Please try again.");
       return;
     }
   };

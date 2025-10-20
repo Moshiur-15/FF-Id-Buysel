@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Edit, Trash2, MoreVertical } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link'
+import { toast } from 'sonner';
 
 const ManageIdDesign = ({ accounts, setIds, Ids }) => {
     const [openMenuId, setOpenMenuId] = useState(null);
@@ -20,7 +21,7 @@ const ManageIdDesign = ({ accounts, setIds, Ids }) => {
                 )
             )
 
-            alert(res?.data?.message);
+            toast.success(res?.data?.message);
         }
         catch(err){
             console.log(err);
@@ -36,7 +37,7 @@ const ManageIdDesign = ({ accounts, setIds, Ids }) => {
         try {
             const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id/${id}`)
             setIds(Ids.filter(item => item._id !== id));
-            alert(res?.data?.message)
+            toast.success(res?.data?.message)
         }
         catch (err) {
             console.log(err);

@@ -13,8 +13,7 @@ import axios from 'axios';
 
 const Home = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
-  const {data } = useSession()
-  console.log(data);
+  const { data } = useSession()
 
   const faqs = [
     {
@@ -62,8 +61,6 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-
-
       {/* Banner/Hero Section */}
       <section id="home" className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900">
         {/* Carousel Background */}
@@ -77,8 +74,8 @@ const Home = () => {
         {/* Content */}
         <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-32 md:py-40">
           <div className="text-center">
-            <h1 className="text-4xl md:text-7xl font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_4px_15px_rgba(59,130,246,0.4)]">
-              Rezvi Buy & Sell
+            <h1 className="text-4xl md:text-7xl uppercase font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_4px_15px_rgba(59,130,246,0.4)]">
+              Rezvi game shop
               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-600 mt-2 border-b-4 border-indigo-500 inline-block">
                 FREE FIRE IDs
               </span>
@@ -95,12 +92,11 @@ const Home = () => {
         </div>
       </section>
 
-
       {/* Recent IDs */}
       <section id="recent" className="py-16 bg-gray-100">
         <div className="px-4 sm:px-6 lg:px-8 container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Recent Free Fire IDs</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Recent IDs</h2>
             <p className="text-gray-600 text-lg max-w-xl mx-auto">Find the latest Free Fire accounts for sale, all verified and ready for instant purchase.</p>
           </div>
 
@@ -182,7 +178,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      
+
       <div className="absolute inset-0">
         <div className="absolute top-2/3 left-3/4 w-72 h-72 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-indigo-600/30 rounded-full blur-3xl animate-pulse delay-2000"></div>

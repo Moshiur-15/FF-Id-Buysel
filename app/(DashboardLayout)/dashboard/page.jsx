@@ -29,7 +29,6 @@ export default function WelcomeDashboard() {
   ];
 
   const {data} = useSession()
-  console.log(data?.user);
 
   return (
     <div className="min-h-screen bg-gray-50">

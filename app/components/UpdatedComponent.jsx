@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 const UpdatedComponent = ({ updatedData }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -68,7 +69,7 @@ const UpdatedComponent = ({ updatedData }) => {
       setFormData((prev) => ({ ...prev, images: newImages }));
     } catch (error) {
       console.error("Image upload failed:", error);
-      alert("Image upload failed!");
+      toast.error("Image upload failed!");
     } finally {
       setUploading(false);
     }
@@ -82,10 +83,10 @@ const UpdatedComponent = ({ updatedData }) => {
         formData
       );
       router.push('/dashboard/manage-ids')
-      alert("ID updated successfully!");
+      toast.success("ID updated successfully!");
     } catch (error) {
       console.error(error);
-      alert("Failed to update ID. Please try again.");
+      toast.error("Failed to update ID. Please try again.");
     }
   };
 

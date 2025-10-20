@@ -2,9 +2,14 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail, Phone, Send } from 'lucide-react';
+import { toast } from 'sonner';
+import { useSession } from 'next-auth/react';
 
 export default function ContactPage() {
     const form = useRef();
+    const { data } = useSession()
+    const user = data?.user;
+    console.log(user);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -19,19 +24,22 @@ export default function ContactPage() {
 
     const sendEmail = (e) => {
         e.preventDefault();
-
-        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, {
-            publicKey: 'YOUR_PUBLIC_KEY',
+        if (!user) {
+            toast.error('Please login first to send message!');
+            return;
+        }
+        emailjs.sendForm(`${process.env.NEXT_PUBLIC_SERVICE_ID}`, `${process.env.NEXT_PUBLIC_TEMPLATE_ID}`, form.current, {
+            publicKey: (`${process.env.NEXT_PUBLIC_PUBLIC_KEY}`),
         })
             .then(
                 () => {
                     console.log('SUCCESS!');
-                    alert('Message sent successfully!');
+                    toast.success('Message sent successfully!');
                     setFormData({ name: '', email: '', message: '' });
                 },
                 (error) => {
                     console.log('FAILED...', error.text);
-                    alert('Failed to send message. Please try again.');
+                    toast.error('Failed to send message. Please try again.');
                 },
             );
     };
@@ -54,7 +62,7 @@ export default function ContactPage() {
                     {/* Contact Info */}
                     <div className="space-y-8">
                         <div>
-                            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-black">
+                            <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-black">
                                 Contact Information
                             </h2>
                             <p className="text-gray-600 text-lg mb-12">

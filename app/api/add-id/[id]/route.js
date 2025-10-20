@@ -49,7 +49,6 @@ export async function GET(req, {params}) {
     return NextResponse.json({ message: "Get Id successfully", data }, { status: 200 });
   }
   catch (err) {
-    console.log(err);
     return NextResponse.json("Failed to Get Id", { status: 500 });
   }
 }

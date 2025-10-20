@@ -49,12 +49,10 @@ const ManageUsersPage = () => {
   };
 
   const handleEdit = (id) => {
-    console.log('Edit user:', id);
     setOpenMenuId(null);
   };
 
   const handleDelete = (id) => {
-    console.log('Delete user:', id);
     setOpenMenuId(null);
   };
 
