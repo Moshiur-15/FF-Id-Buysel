@@ -9,7 +9,6 @@ export default function ContactPage() {
     const form = useRef();
     const { data } = useSession()
     const user = data?.user;
-    console.log(user);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -114,7 +113,7 @@ export default function ContactPage() {
                                 <input
                                     type="text"
                                     name="name"
-                                    value={formData.name}
+                                    value={user?.name}
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
                                     placeholder="John Doe"
@@ -129,7 +128,7 @@ export default function ContactPage() {
                                 <input
                                     type="email"
                                     name="email"
-                                    value={formData.email}
+                                    value={user?.email}
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 border-2 border-gray-300 focus:border-black focus:outline-none transition-colors"
                                     placeholder="john@example.com"
