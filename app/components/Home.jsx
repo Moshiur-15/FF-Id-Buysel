@@ -8,8 +8,8 @@ import CarouselBackground from './CarouselBackground';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
-
-
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Home = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
@@ -42,10 +42,18 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100
+    });
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id`);
+        const response = await axios.get('/api/add-id');
         setIds(response.data);
       }
       catch (err) {
@@ -63,28 +71,23 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Banner/Hero Section */}
       <section id="home" className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-900">
-        {/* Carousel Background */}
         <div className="absolute inset-0">
           <CarouselBackground />
         </div>
-
-        {/* Overlay */}
         <div className="absolute inset-0 bg-black/50" />
-
-        {/* Content */}
         <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-32 md:py-40">
           <div className="text-center">
-            <h1 className="text-4xl md:text-7xl uppercase font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_4px_15px_rgba(59,130,246,0.4)]">
+            <h1 data-aos="fade-up" className="text-4xl md:text-7xl uppercase font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_4px_15px_rgba(59,130,246,0.4)]">
               Rezvi game shop
               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-600 mt-2 border-b-4 border-indigo-500 inline-block">
                 FREE FIRE IDs
               </span>
             </h1>
-            <p className="text-lg lg:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto drop-shadow-lg">
+            <p data-aos="fade-up" data-aos-delay="200" className="text-lg lg:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto drop-shadow-lg">
               The most trusted marketplace for Free Fire accounts. Find high-rank IDs with rare skins, diamonds, and exclusive items.
             </p>
             <Link href='/allIds'>
-              <Button className="px-10 py-6 font-semibold text-lg rounded-none bg-gray-600 hover:cursor-pointer active:scale-95">
+              <Button data-aos="fade-up" data-aos-delay="400" className="px-10 py-6 font-semibold text-lg rounded-none bg-gray-600 hover:cursor-pointer active:scale-95">
                 Browse IDs Now
               </Button>
             </Link>
@@ -96,8 +99,8 @@ const Home = () => {
       <section id="recent" className="py-16 bg-gray-100">
         <div className="px-4 sm:px-6 lg:px-8 container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Recent IDs</h2>
-            <p className="text-gray-600 text-lg max-w-xl mx-auto">Find the latest Free Fire accounts for sale, all verified and ready for instant purchase.</p>
+            <h2 data-aos="fade-up" className="text-3xl md:text-4xl font-bold text-black mb-4">Recent IDs</h2>
+            <p data-aos="fade-up" data-aos-delay="200" className="text-gray-600 text-lg max-w-xl mx-auto">Find the latest Free Fire accounts for sale, all verified and ready for instant purchase.</p>
           </div>
 
           <div>
@@ -111,8 +114,8 @@ const Home = () => {
               </div>
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {Ids.slice().reverse().slice(0, 6)?.map(account => (
-                  <div key={account._id}>
+                {Ids.slice().reverse().slice(0, 6)?.map((account, index) => (
+                  <div key={account?._id} data-aos="fade-up" data-aos-delay={index * 100}>
                     <IdCard account={account} />
                   </div>
                 ))}
@@ -121,11 +124,10 @@ const Home = () => {
           </div>
 
           <Link href='/allIds'>
-            <button className='mt-10 text-nowrap active:scale-95 px-10 py-1.5 mx-auto border-none rounded-none flex justify-center items-center cursor-pointer shadow-[inset_0_0_10px_rgba(100,130,246,0.9)] hover:inset-shadow-none transition-all duration-700 hover:bg-gray-300 font-bold'>
+            <button data-aos="fade-up" className='mt-10 text-nowrap active:scale-95 px-10 py-1.5 mx-auto border-none rounded-none flex justify-center items-center cursor-pointer shadow-[inset_0_0_10px_rgba(100,130,246,0.9)] hover:inset-shadow-none transition-all duration-700 hover:bg-gray-300 font-bold'>
               View All Ids
             </button>
           </Link>
-
         </div>
       </section>
 
@@ -133,25 +135,23 @@ const Home = () => {
       <section id="faq" className="py-16 bg-white container mx-auto">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
+            <h2 data-aos="fade-up" className="text-3xl md:text-4xl font-bold text-black mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-gray-600 text-lg max-w-lg mx-auto">
+            <p data-aos="fade-up" data-aos-delay="200" className="text-gray-600 text-lg max-w-lg mx-auto">
               Everything you need to know about buying and selling Free Fire accounts
             </p>
           </div>
 
           <div className="flex flex-col md:flex-row gap-10 items-center w-full md:h-[400px]">
-            {/* Left Side Image */}
-            <div className="flex justify-center md:w-1/2 h-full">
+            <div data-aos="fade-right" className="flex justify-center md:w-1/2 h-full">
               <img
                 src="/563dd4c11d7f61ef99c1b8d1892bd759.jpg"
                 alt="FAQ Illustration"
                 className="rounded shadow w-full"
               />
             </div>
-            {/* Right Side FAQ */}
-            <div className="space-y-4 md:w-1/2">
+            <div data-aos="fade-left" className="space-y-4 md:w-1/2">
               {faqs.map((faq, index) => (
                 <div
                   key={index}

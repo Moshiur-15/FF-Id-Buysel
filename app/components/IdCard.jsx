@@ -15,11 +15,12 @@ const IdCard = ({ account }) => {
         <section>
             <div className="">
                 <div
-                    key={account._id}
+                    key={account?._id}
                     className="group relative bg-white rounded overflow-hidden border border-gray-200"
                 >
                     {/* Image Section */}
                     <div className="relative h-56 overflow-hidden">
+                        
                         <img
                             src={account.images[0] || 'https://i.ibb.co.com/8nFV1RZY/white-bokeh-lights-background.webp'}
                             alt={account.name}
@@ -101,7 +102,7 @@ const IdCard = ({ account }) => {
                                 Buy Now
                             </Button>
 
-                            <Link href={`/allIds/${account._id}`} className="">
+                            <Link href={`/allIds/${account?._id}`} className="">
                                 <Button variant="outline" size="sm" className="cursor-pointer flex justify-center items-center gap-2 hover:bg-slate-800 hover:text-white duration-700 rounded-none active:scale-95 absolute bottom-0 right-0 border-t border-l border-gray-200 border-b-0 border-r-0">
                                     <Info className="h-5 w-5" />
                                     Details

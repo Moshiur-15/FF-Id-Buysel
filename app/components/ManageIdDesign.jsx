@@ -71,7 +71,7 @@ const ManageIdDesign = ({ accounts, setIds, Ids }) => {
                                 {accounts && accounts.length > 0 ? (
                                     accounts.slice().reverse().map((account, index) => (
                                         <tr
-                                            key={account._id}
+                                            key={account?._id}
                                             className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
                                                 }`}
                                         >

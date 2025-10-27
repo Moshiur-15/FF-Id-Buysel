@@ -37,13 +37,12 @@ export default function Navbar() {
                                 {data?.user ? (
                                     <div className="flex items-center space-x-3">
                                         <div>
-                                            <Link href='/dashboard'><LayoutDashboard className="w-7 h-7 text-gray-700" /></Link>
+                                            {data?.user?.role === 'admin' ? <Link href='/dashboard'><LayoutDashboard className="w-7 h-7 text-gray-700" /></Link> : ""}
                                         </div><img
                                             src="https://i.ibb.co.com/vphdQHN/png-blue-user-profile-account-icon-transparent-background-53876-959603.webp"
                                             alt="User Avatar"
                                             className="h-10 w-10 rounded-full border-2 border-gray-300 object-cover"
                                         />
-
                                         <button
                                             onClick={() => signOut()}
                                             className="bg-black text-white px-3 py-1.5 rounded hover:bg-gray-800 transition cursor-pointer"
@@ -68,7 +67,7 @@ export default function Navbar() {
                                 {data?.user && (
                                     <>
                                         <div>
-                                            <Link href='/dashboard'><LayoutDashboard className="w-7 h-7 text-gray-700" /></Link>
+                                            {data?.user?.role === 'admin' ? <Link href='/dashboard'><LayoutDashboard className="w-7 h-7 text-gray-700" /></Link> : ""}
                                         </div><img
                                             src="https://i.ibb.co.com/vphdQHN/png-blue-user-profile-account-icon-transparent-background-53876-959603.webp"
                                             alt="User Avatar"

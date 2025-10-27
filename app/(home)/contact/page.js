@@ -1,9 +1,11 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { Mail, Phone, Send } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function ContactPage() {
     const form = useRef();
@@ -15,6 +17,15 @@ export default function ContactPage() {
         email: '',
         message: '',
     });
+
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: false,
+            mirror: true,
+        });
+        AOS.refresh();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -48,8 +59,8 @@ export default function ContactPage() {
             {/* Hero Section */}
             <div className="bg-black text-white py-20 px-4">
                 <div className="container mx-auto px-10">
-                    <h1 className="text-5xl md:text-7xl font-bold mb-4">Get in Touch</h1>
-                    <p className="text-xl md:text-2xl text-gray-300">
+                    <h1 data-aos="fade-up" className="text-5xl md:text-7xl font-bold mb-4">Get in Touch</h1>
+                    <p data-aos="fade-up" data-aos-delay="200" className="text-xl md:text-2xl text-gray-300">
                         We'd love to hear from you. Send us a message and we'll respond as soon as possible.
                     </p>
                 </div>
@@ -59,7 +70,7 @@ export default function ContactPage() {
             <div className="container mx-auto px-8 py-16 md:py-24">
                 <div className="grid md:grid-cols-2 gap-12 md:gap-16">
                     {/* Contact Info */}
-                    <div className="space-y-8">
+                    <div data-aos="fade-right" className="space-y-8">
                         <div>
                             <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-black">
                                 Contact Information
@@ -70,7 +81,7 @@ export default function ContactPage() {
                         </div>
 
                         <div className="space-y-6">
-                            <div className="flex items-start space-x-4 group">
+                            <div data-aos="fade-up" data-aos-delay="100" className="flex items-start space-x-4 group">
                                 <div className="bg-black text-white p-3 rounded-full group-hover:bg-gray-800 transition-colors">
                                     <Phone className="w-6 h-6" />
                                 </div>
@@ -80,7 +91,7 @@ export default function ContactPage() {
                                 </div>
                             </div>
 
-                            <div className="flex items-start space-x-4 group">
+                            <div data-aos="fade-up" data-aos-delay="200" className="flex items-start space-x-4 group">
                                 <div className="bg-black text-white p-3 rounded-full group-hover:bg-gray-800 transition-colors">
                                     <Mail className="w-6 h-6" />
                                 </div>
@@ -92,7 +103,7 @@ export default function ContactPage() {
                         </div>
 
                         {/* Decorative Element */}
-                        <div className="hidden md:block mt-12 pt-12 border-t border-gray-200">
+                        <div data-aos="zoom-in" data-aos-delay="300" className="hidden md:block mt-12 pt-12 border-t border-gray-200">
                             <div className="w-32 h-32 bg-black rounded-full overflow-hidden">
                                 <img
                                     src="/563dd4c11d7f61ef99c1b8d1892bd759.jpg"
@@ -104,9 +115,9 @@ export default function ContactPage() {
                     </div>
 
                     {/* Contact Form */}
-                    <div className="bg-gray-50 p-8 md:p-10 rounded-2xl">
+                    <div data-aos="fade-left" className="bg-gray-50 p-8 md:p-10 rounded-2xl">
                         <form ref={form} onSubmit={sendEmail} className="space-y-6">
-                            <div>
+                            <div data-aos="fade-up" data-aos-delay="100">
                                 <label className="block text-sm font-semibold mb-2 text-black">
                                     Full Name
                                 </label>
@@ -121,7 +132,7 @@ export default function ContactPage() {
                                 />
                             </div>
 
-                            <div>
+                            <div data-aos="fade-up" data-aos-delay="200">
                                 <label className="block text-sm font-semibold mb-2 text-black">
                                     Email Address
                                 </label>
@@ -136,7 +147,7 @@ export default function ContactPage() {
                                 />
                             </div>
 
-                            <div>
+                            <div data-aos="fade-up" data-aos-delay="300">
                                 <label className="block text-sm font-semibold mb-2 text-black">
                                     Message
                                 </label>
@@ -152,6 +163,8 @@ export default function ContactPage() {
                             </div>
 
                             <button
+                                data-aos="fade-up" 
+                                data-aos-delay="400"
                                 type="submit"
                                 className="w-full bg-black text-white py-4 px-6 font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center space-x-2 group"
                             >

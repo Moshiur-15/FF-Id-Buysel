@@ -3,22 +3,32 @@ import { useEffect, useState } from 'react';
 import IdCard from '@/app/components/IdCard';
 import { Spinner } from '@/components/ui/spinner';
 import axios from 'axios';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Page = () => {
-
     const [Ids, setIds] = useState([]);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: false,
+            mirror: true,
+        });
+        AOS.refresh();
+    }, []);
 
     const fetchData = async (pageNum = 1) => {
         try {
             setLoading(true);
             const response = await axios.get(`/api/add-id?page=${pageNum}&limit=10`);
             if (response.data.length === 0) {
-                setHasMore(false); // আর data নেই
+                setHasMore(false);
             } else {
-                setIds(prev => [...prev, ...response.data]); // পুরানো data + নতুন data
+                setIds(prev => [...prev, ...response.data]);
             }
         } catch (err) {
             console.log(err);
@@ -27,12 +37,10 @@ const Page = () => {
         }
     };
 
-    // প্রথমে data load
     useEffect(() => {
         fetchData(page);
     }, [page]);
 
-    // scroll detect
     useEffect(() => {
         const handleScroll = () => {
             if (
@@ -40,7 +48,7 @@ const Page = () => {
                 !loading &&
                 hasMore
             ) {
-                setPage(prev => prev + 1); // নতুন page load
+                setPage(prev => prev + 1);
             }
         };
 
@@ -52,11 +60,11 @@ const Page = () => {
         <div className="bg-white text-black min-h-screen p-8 container mx-auto">
             <section className='flex flex-col text-center py-6 md:py-8 lg:py-12'>
                 <div>
-                    <h1 className="text-3xl font-bold mb-2">ALL FREE FIRE IDS</h1>
-                    <p className="text-gray-700 mb-4">BROWSE AND FIND THE PERFECT FREE FIRE ID FOR YOU.</p>
+                    <h1 data-aos="fade-up" className="text-3xl font-bold mb-2">ALL FREE FIRE IDS</h1>
+                    <p data-aos="fade-up" data-aos-delay="200" className="text-gray-700 mb-4">BROWSE AND FIND THE PERFECT FREE FIRE ID FOR YOU.</p>
                 </div>
 
-                <div className="mb-6">
+                <div data-aos="fade-up" data-aos-delay="400" className="mb-6">
                     <input
                         type="text"
                         placeholder="🔍 SEARCH FF ID..."
@@ -74,8 +82,8 @@ const Page = () => {
                     </div>
                 ) : (
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {Ids.slice().reverse().map(account => (
-                            <div key={account._id}>
+                        {Ids.slice().reverse().map((account, index) => (
+                            <div key={account?._id} data-aos="fade-up" data-aos-delay={index * 50}>
                                 <IdCard account={account} />
                             </div>
                         ))}
