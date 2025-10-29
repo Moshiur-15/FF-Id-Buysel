@@ -4,26 +4,26 @@ import { Edit, Trash2, MoreVertical } from 'lucide-react';
 import axios from 'axios';
 import Link from 'next/link'
 import { toast } from 'sonner';
+import MyPagination from './MyPagination';
 
 const ManageIdDesign = ({ accounts, setIds, Ids }) => {
     const [openMenuId, setOpenMenuId] = useState(null);
 
-    const handleStatusChange = async(id, newStatus) => {
-        try{
+    const handleStatusChange = async (id, newStatus) => {
+        try {
             const res = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}api/status`, {
                 id,
                 newStatus
             })
 
-            setIds((prev)=>
-                prev.map(item=>
-                    item?._id === id ? res.data.updatedData :  item
+            setIds((prev) =>
+                prev.map(item =>
+                    item?._id === id ? res.data.updatedData : item
                 )
             )
-
             toast.success(res?.data?.message);
         }
-        catch(err){
+        catch (err) {
             console.log(err);
             return
         }
@@ -44,6 +44,14 @@ const ManageIdDesign = ({ accounts, setIds, Ids }) => {
         }
         setOpenMenuId(null);
     };
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentAccounts = accounts?.slice(indexOfFirstItem, indexOfLastItem);
+
 
 
     return (
@@ -68,8 +76,8 @@ const ManageIdDesign = ({ accounts, setIds, Ids }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {accounts && accounts.length > 0 ? (
-                                    accounts.slice().reverse().map((account, index) => (
+                                {currentAccounts && currentAccounts.length > 0 ? (
+                                    currentAccounts.slice().reverse().map((account, index) => (
                                         <tr
                                             key={account?._id}
                                             className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
@@ -152,15 +160,19 @@ const ManageIdDesign = ({ accounts, setIds, Ids }) => {
                     </div>
                 </div>
 
-                <div className="mt-6 flex items-center justify-between text-sm text-gray-600">
-                    <span>Showing {accounts?.length} accounts</span>
-                    <div className="flex gap-2">
-                        <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                            Previous
-                        </button>
-                        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                            Next
-                        </button>
+                <div className="mt-6  text-sm text-gray-600">
+
+                    <div className="flex items-center justify-between">
+                        <div className='text-sm text-gray-600'>
+                            Showing {accounts?.length} accounts | Page {currentPage} of {Math.ceil(accounts?.length / itemsPerPage)}
+                        </div>
+
+                        <MyPagination
+                            totalPages={Math.ceil(accounts?.length / itemsPerPage)}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            className="justify-end"
+                        />
                     </div>
                 </div>
             </div>

@@ -166,7 +166,7 @@ const Page = () => {
               GAME STATISTICS
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
+            <div className="grid grid-cols-1 lg:gc xl:grid-cols-3 gap-4 ">
               <div>
                 <label className="block text-sm font-semibold mb-2 text-black">EVO GUN</label>
                 <input
@@ -317,7 +317,7 @@ const Page = () => {
               IMAGE SECTION
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-6">
               {formData.images.map((img, index) => (
                 <div key={index}>
                   <label className="block text-sm font-semibold mb-2 text-black">

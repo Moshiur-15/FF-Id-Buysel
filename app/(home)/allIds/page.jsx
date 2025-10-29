@@ -81,7 +81,7 @@ const Page = () => {
                             setPage(1);
                             setHasMore(true);
                         }}
-                        className="w-96 border border-gray-300 p-3 rounded focus:ring-0"
+                        className="w-96 border border-gray-300 p-3 focus:ring-0 focus:outline-none"
                     />
 
                 </div>

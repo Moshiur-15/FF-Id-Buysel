@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ShoppingCart, Star, Shield, Zap, Award, Eye, Heart, Share2 } from 'lucide-react';
 import axios from 'axios';
 import { Spinner } from '@/components/ui/spinner';
-
+import { toast } from 'sonner';
 
 const AccountDetailsPage = ({ params }) => {
     const [selectedImage, setSelectedImage] = useState(0);
@@ -75,10 +75,10 @@ const AccountDetailsPage = ({ params }) => {
                                                     navigator.clipboard
                                                         .writeText(window.location.href)
                                                         .then(() => {
-                                                            alert('🔗 Link copied to clipboard!');
+                                                            toast.success('🔗 Link copied to clipboard!');
                                                         })
                                                         .catch(() => {
-                                                            alert('Failed to copy link');
+                                                            toast.error('Failed to copy link');
                                                         });
                                                 }
                                             }}

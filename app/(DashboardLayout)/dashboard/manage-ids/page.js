@@ -17,7 +17,6 @@ const ManageId = () => {
             <Suspense fallback={<div>Loading component...</div>}>
                 <ManageIdDesign accounts={Ids} setIds={setIds} Ids={Ids} />
             </Suspense>
-
         </div>
     );
 };

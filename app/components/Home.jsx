@@ -14,7 +14,6 @@ import 'aos/dist/aos.css';
 const Home = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
   const { data } = useSession()
-
   const faqs = [
     {
       question: "How does the Free Fire ID buying process work?",
@@ -79,9 +78,6 @@ const Home = () => {
           <div className="text-center">
             <h1 data-aos="fade-up" className="text-4xl md:text-7xl uppercase font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_4px_15px_rgba(59,130,246,0.4)]">
               Rezvi game shop
-              <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-600 mt-2 border-b-4 border-indigo-500 inline-block">
-                FREE FIRE IDs
-              </span>
             </h1>
             <p data-aos="fade-up" data-aos-delay="200" className="text-lg lg:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto drop-shadow-lg">
               The most trusted marketplace for Free Fire accounts. Find high-rank IDs with rare skins, diamonds, and exclusive items.
@@ -94,6 +90,107 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-16 bg-white">
+        <div className="px-4 sm:px-6 lg:px-8 container mx-auto">
+          <div className="text-center mb-12">
+            <h2
+              data-aos="fade-up"
+              className="text-3xl md:text-4xl font-bold text-black mb-4"
+            >
+              Platform Features
+            </h2>
+            <p
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="text-gray-600 text-lg max-w-xl mx-auto"
+            >
+              Explore the key features that make this platform fast, secure, and
+              user-friendly for Free Fire account trading.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="p-6 bg-blue-50 shadow hover:shadow-lg transition"
+            >
+              <h3 className="text-xl font-bold mb-2">Verified Accounts</h3>
+              <p className="text-gray-600">
+                Every account listed is checked for authenticity to ensure safe and
+                secure trading.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="p-6 bg-blue-50 shadow hover:shadow-lg transition"
+            >
+              <h3 className="text-xl font-bold mb-2">Instant Purchase</h3>
+              <p className="text-gray-600">
+                Buy your desired ID instantly without waiting — smooth and
+                hassle-free.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div
+              data-aos="fade-up"
+              data-aos-delay="300"
+              className="p-6 bg-blue-50 shadow hover:shadow-lg transition"
+            >
+              <h3 className="text-xl font-bold mb-2">Secure Payment</h3>
+              <p className="text-gray-600">
+                Integrated secure payment system ensures full protection for buyers
+                and sellers.
+              </p>
+            </div>
+
+            {/* Feature 4 */}
+            <div
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className="p-6 bg-blue-50 shadow hover:shadow-lg transition"
+            >
+              <h3 className="text-xl font-bold mb-2">Responsive Design</h3>
+              <p className="text-gray-600">
+                Access the platform from mobile, tablet, or desktop — fully responsive
+                UI for smooth browsing.
+              </p>
+            </div>
+
+            {/* Feature 5 */}
+            <div
+              data-aos="fade-up"
+              data-aos-delay="500"
+              className="p-6 bg-blue-50 shadow hover:shadow-lg transition"
+            >
+              <h3 className="text-xl font-bold mb-2">Search & Filter</h3>
+              <p className="text-gray-600">
+                Quickly find accounts by name, price, or rank with advanced filtering.
+              </p>
+            </div>
+
+            {/* Feature 6 */}
+            <div
+              data-aos="fade-up"
+              data-aos-delay="600"
+              className="p-6 bg-blue-50 shadow hover:shadow-lg transition"
+            >
+              <h3 className="text-xl font-bold mb-2">Wishlist Support</h3>
+              <p className="text-gray-600">
+                Save your favorite IDs to your wishlist and come back anytime.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* Recent IDs */}
       <section id="recent" className="py-16 bg-gray-100">
