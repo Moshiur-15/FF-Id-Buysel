@@ -50,11 +50,9 @@ const IdCard = ({ account }) => {
                         {/* ID Name & Price */}
                         <div className="flex justify-between items-center pb-3 border-b border-gray-300">
                             <div>
-                                <p className="text-xs text-gray-500 mb-1">ID Name</p>
                                 <p className="text-black font-bold text-lg">{account.name}</p>
                             </div>
                             <div className="text-right">
-                                <p className="text-xs text-gray-500 mb-1">PRICE</p>
                                 <p className="text-2xl font-black text-black">
                                     ৳{account.price.toLocaleString()}
                                 </p>
@@ -63,7 +61,7 @@ const IdCard = ({ account }) => {
 
                         {/* Description */}
                         <p className="text-gray-700 text-xs font-semibold leading-relaxed">
-                            {account.description.slice(0, 60)}...
+                            {account.description.slice(0, 80)}...
                         </p>
 
                         {/* Stats */}

@@ -79,7 +79,7 @@ const Home = () => {
             <h1 data-aos="fade-up" className="text-4xl md:text-7xl uppercase font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_4px_15px_rgba(59,130,246,0.4)]">
               Rezvi game shop
             </h1>
-            <p data-aos="fade-up" data-aos-delay="200" className="text-lg lg:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto drop-shadow-lg">
+            <p data-aos="fade-up" data-aos-delay="200" className="text-lg lg:text-2xl text-gray-200 mb-10 max-w-xl lg:max-w-3xl mx-auto drop-shadow-lg">
               The most trusted marketplace for Free Fire accounts. Find high-rank IDs with rare skins, diamonds, and exclusive items.
             </p>
             <Link href='/allIds'>
