@@ -28,25 +28,33 @@ export async function POST(req) {
 }
 
 export async function GET(req) {
-    try {
-        await connectToDatabase();
+  try {
+    await connectToDatabase();
 
-        const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(req.url);
 
-        // Page & Limit
-        const page = parseInt(searchParams.get('page')) || 1;
-        const limit = parseInt(searchParams.get('limit')) || 10;
-        const skip = (page - 1) * limit;
+    const page = parseInt(searchParams.get('page')) || 1;
+    const limit = parseInt(searchParams.get('limit')) || 10;
+    const skip = (page - 1) * limit;
 
-        // Data fetch with pagination
-        const data = await AddId.find().skip(skip).limit(limit);
+    const search = searchParams.get('search') || '';
 
-        return NextResponse.json(data, { status: 200 });
-    } catch (error) {
-        console.error('GET /api/add-id error:', error);
-        return NextResponse.json(
-            { error: 'Internal Server Error', details: error.message },
-            { status: 500 }
-        );
+    let filter = {};
+
+    if (!isNaN(search) && search.trim() !== '') {
+      filter = { price: { $lte: Number(search) } };
+    } else if (search) {
+      filter = { name: { $regex: search, $options: 'i' } };
     }
+
+    const data = await AddId.find(filter).skip(skip).limit(limit);
+
+    return NextResponse.json(data, { status: 200 });
+  } catch (error) {
+    console.error('GET /api/add-id error:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error', details: error.message },
+      { status: 500 }
+    );
+  }
 }

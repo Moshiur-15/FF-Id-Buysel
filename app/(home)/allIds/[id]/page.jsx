@@ -32,7 +32,7 @@ const AccountDetailsPage = ({ params }) => {
 
         fetchAccount();
     }, [id]);
-    
+
     const handleClick = () => {
         const phoneNumber = process.env.NEXT_PUBLIC_NUMBER;
         const message = encodeURIComponent("Hello! I want to buy this Free Fire ID.");
@@ -44,7 +44,6 @@ const AccountDetailsPage = ({ params }) => {
     return (
         <div className="min-h-screen bg-white">
             <div className="container mx-auto p-9 my-6">
-
                 <div>
                     {loading ? <Spinner /> :
                         <>
@@ -59,7 +58,32 @@ const AccountDetailsPage = ({ params }) => {
                                         >
                                             <Heart className={isFavorite ? 'fill-current' : ''} size={24} />
                                         </button>
-                                        <button className="p-3 bg-gray-100 text-black rounded-lg hover:bg-gray-200 transition-all">
+                                        <button
+                                            onClick={() => {
+                                                const shareData = {
+                                                    title: 'Check this Free Fire ID!',
+                                                    text: 'Hey! Look at this awesome Free Fire ID I found!',
+                                                    url: window.location.href,
+                                                };
+
+                                                if (navigator.share) {
+                                                    navigator
+                                                        .share(shareData)
+                                                        .then(() => console.log('Shared successfully'))
+                                                        .catch((error) => console.log('Error sharing:', error));
+                                                } else {
+                                                    navigator.clipboard
+                                                        .writeText(window.location.href)
+                                                        .then(() => {
+                                                            alert('🔗 Link copied to clipboard!');
+                                                        })
+                                                        .catch(() => {
+                                                            alert('Failed to copy link');
+                                                        });
+                                                }
+                                            }}
+                                            className="p-3 bg-gray-100 text-black rounded-lg hover:bg-gray-200 transition-all"
+                                        >
                                             <Share2 size={24} />
                                         </button>
                                     </div>
@@ -72,8 +96,8 @@ const AccountDetailsPage = ({ params }) => {
                                     <span className="text-lg"><span className='font-bold border-b-4 border-gray-600' >UID:</span> {accountData.uid}</span>
                                 </div>
                             </div>
-                            <div className="grid lg:grid-cols-2 gap-8">
 
+                            <div className="grid lg:grid-cols-2 gap-8">
                                 {/* Left Column - Media Gallery */}
                                 <div className="space-y-4">
                                     {/* Main Image/Video Display */}
@@ -271,8 +295,6 @@ const AccountDetailsPage = ({ params }) => {
                             </div>
                         </>}
                 </div>
-
-
             </div>
         </div>
     );

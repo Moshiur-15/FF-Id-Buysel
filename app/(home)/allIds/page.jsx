@@ -11,6 +11,7 @@ const Page = () => {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         AOS.init({
@@ -21,10 +22,12 @@ const Page = () => {
         AOS.refresh();
     }, []);
 
-    const fetchData = async (pageNum = 1) => {
+    const fetchData = async (pageNum = 1, searchQuery = '') => {
         try {
             setLoading(true);
-            const response = await axios.get(`/api/add-id?page=${pageNum}&limit=10`);
+            const response = await axios.get(
+                `/api/add-id?page=${pageNum}&limit=10&search=${searchQuery}`
+            );
             if (response.data.length === 0) {
                 setHasMore(false);
             } else {
@@ -38,8 +41,8 @@ const Page = () => {
     };
 
     useEffect(() => {
-        fetchData(page);
-    }, [page]);
+        fetchData(page, search);
+    }, [page, search]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -55,6 +58,8 @@ const Page = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [loading, hasMore]);
+    console.log(search);
+    console.log(Ids);
 
     return (
         <div className="bg-white text-black min-h-screen p-8 container mx-auto">
@@ -68,8 +73,17 @@ const Page = () => {
                     <input
                         type="text"
                         placeholder="🔍 SEARCH FF ID..."
+                        value={search}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setSearch(value);
+                            setIds([]);
+                            setPage(1);
+                            setHasMore(true);
+                        }}
                         className="w-96 border border-gray-300 p-3 rounded focus:ring-0"
                     />
+
                 </div>
             </section>
 
@@ -83,7 +97,7 @@ const Page = () => {
                 ) : (
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {Ids.slice().reverse().map((account, index) => (
-                            <div key={account?._id} data-aos="fade-up" data-aos-delay={index * 50}>
+                            <div key={index+1} data-aos="fade-up" data-aos-delay={index * 50}>
                                 <IdCard account={account} />
                             </div>
                         ))}
