@@ -1,167 +1,142 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
-import { Users, Activity, TrendingUp, Database, Search, Plus, Edit2, Trash2, Bell, Settings } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { ShoppingCart, DollarSign, Users, TrendingUp, Search, Bell, User, Menu, Package, Shield, Star } from 'lucide-react';
 
-export default function WelcomeDashboard() {
-  const [users, setUsers] = useState([
-    { id: 'USR001', name: 'Alex Johnson', email: 'alex@example.com', status: 'active', role: 'Admin' },
-    { id: 'USR002', name: 'Sarah Williams', email: 'sarah@example.com', status: 'active', role: 'User' },
-    { id: 'USR003', name: 'Mike Chen', email: 'mike@example.com', status: 'inactive', role: 'User' },
-    { id: 'USR004', name: 'Emily Davis', email: 'emily@example.com', status: 'active', role: 'Manager' },
-    { id: 'USR005', name: 'James Brown', email: 'james@example.com', status: 'active', role: 'User' },
-    { id: 'USR006', name: 'Lisa Anderson', email: 'lisa@example.com', status: 'active', role: 'User' },
-  ]);
-
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+export default function Dashboard() {
+  const [activeTab, setActiveTab] = useState('overview');
 
   const stats = [
-    { title: 'Total Users', value: users.length, icon: Users, color: 'bg-blue-500' },
-    { title: 'Active Users', value: users.filter(u => u.status === 'active').length, icon: Activity, color: 'bg-green-500' },
-    { title: 'New This Month', value: '12', icon: TrendingUp, color: 'bg-purple-500' },
-    { title: 'Total Records', value: '1,247', icon: Database, color: 'bg-orange-500' },
+    { title: 'Total Sales', value: '৳45,230', icon: DollarSign, color: 'bg-blue-500' },
+    { title: 'Active Listings', value: '28', icon: Package, color: 'bg-green-500' },
+    { title: 'Total Users', value: '1,234', icon: Users, color: 'bg-purple-500' },
+    { title: 'Completed Deals', value: '156', icon: TrendingUp, color: 'bg-orange-500' }
   ];
 
-  const {data} = useSession()
+  const recentListings = [
+    { id: '2847593021', level: 65, diamonds: '50K+', price: '৳15,000', status: 'Available' },
+    { id: '3928475612', level: 58, diamonds: '30K+', price: '৳12,500', status: 'Available' },
+    { id: '4729384756', level: 72, diamonds: '80K+', price: '৳25,000', status: 'Pending' },
+    { id: '5837462910', level: 45, diamonds: '20K+', price: '৳8,500', status: 'Available' },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Welcome Dashboard</h1>
-              <p className="text-gray-600 mt-1">Manage your users and system</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <Bell size={20} className="text-gray-600" />
-              </button>
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <Settings size={20} className="text-gray-600" />
-              </button>
-              <button className="bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition-colors">
-                <Plus size={20} />
-                Add User
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm font-medium">{stat.title}</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-2">{stat.value}</p>
-                </div>
-                <div className={`${stat.color} p-3 rounded-lg`}>
-                  <stat.icon className="text-white" size={24} />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Users Table Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">All Users</h2>
-                <p className="text-gray-600 text-sm mt-1">Complete list with unique IDs</p>
-              </div>
-              <span className="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg text-sm font-semibold">
-                {filteredUsers.length} users
-              </span>
-            </div>
-            
-            {/* Search Bar */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="text"
-                placeholder="Search by name, ID, or email..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-gray-50 border border-gray-300 rounded-lg pl-10 pr-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+        {/* Main Content */}
+        <main className="flex-1 p-6">
+          {/* Welcome Section */}
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">Welcome back!</h2>
+            <p className="text-gray-600">Here's what's happening with your marketplace today.</p>
           </div>
 
-          {/* Table */}
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">User ID</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Name</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Role</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {filteredUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-blue-600 font-mono font-semibold text-sm">{user.id}</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold mr-3">
-                          {user.name.charAt(0)}
-                        </div>
-                        <span className="text-gray-900 font-medium">{user.name}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-gray-600">{user.email}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
-                        {user.role}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        user.status === 'active' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
-                      }`}>
-                        {user.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex gap-2">
-                        <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                          <Edit2 size={18} />
-                        </button>
-                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    </td>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            {stats.map((stat, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`${stat.color} p-3 rounded-lg`}>
+                    <stat.icon className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+                <p className="text-gray-600 text-sm mb-1">{stat.title}</p>
+                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Recent Listings */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h3 className="text-lg font-bold text-gray-900">Recent Listings</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Free Fire ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Level</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Diamonds</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {recentListings.map((listing, index) => (
+                    <tr key={index} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
+                            <Shield className="w-5 h-5 text-white" />
+                          </div>
+                          <span className="text-sm font-medium text-gray-900">{listing.id}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-sm text-gray-900">{listing.level}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-sm text-gray-900">{listing.diamonds}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-sm font-semibold text-gray-900">{listing.price}</span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+                          listing.status === 'Available' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {listing.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                          View Details
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+
+          {/* Quick Actions */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h3>
+              <div className="space-y-3">
+                <button className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition font-medium">
+                  List New ID for Sale
+                </button>
+                <button className="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition font-medium">
+                  Browse Available IDs
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-bold text-gray-900 mb-4">Top Sellers</h3>
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
+                        <User className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">Seller #{i}</p>
+                        <p className="text-xs text-gray-500">{15 - i * 2} sales</p>
+                      </div>
+                    </div>
+                    <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
   );
 }

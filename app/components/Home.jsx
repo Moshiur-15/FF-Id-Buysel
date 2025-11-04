@@ -76,7 +76,7 @@ const Home = () => {
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-32 md:py-40">
           <div className="text-center">
-            <h1 data-aos="fade-up" className="text-4xl md:text-7xl uppercase font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_4px_15px_rgba(59,130,246,0.4)]">
+            <h1 data-aos="fade-up" className="text-4xl md:text-6xl uppercase font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_4px_15px_rgba(59,130,246,0.4)]">
               Rezvi game shop
             </h1>
             <p data-aos="fade-up" data-aos-delay="200" className="text-lg lg:text-2xl text-gray-200 mb-10 max-w-xl lg:max-w-3xl mx-auto drop-shadow-lg">

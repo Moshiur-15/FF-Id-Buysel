@@ -28,10 +28,15 @@ const Page = () => {
             const response = await axios.get(
                 `/api/add-id?page=${pageNum}&limit=10&search=${searchQuery}`
             );
+
             if (response.data.length === 0) {
                 setHasMore(false);
             } else {
-                setIds(prev => [...prev, ...response.data]);
+                if (pageNum === 1) {
+                    setIds(response.data); // প্রথম পেজ হলে replace করবে
+                } else {
+                    setIds(prev => [...prev, ...response.data]); // বাকি পেজগুলো append করবে
+                }
             }
         } catch (err) {
             console.log(err);
@@ -40,9 +45,14 @@ const Page = () => {
         }
     };
 
+
     useEffect(() => {
-        fetchData(page, search);
-    }, [page, search]);
+        const delay = setTimeout(() => {
+            fetchData(1, search);
+        }, 500);
+        return () => clearTimeout(delay);
+    }, [search]);
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -72,7 +82,7 @@ const Page = () => {
                 <div data-aos="fade-up" data-aos-delay="400" className="mb-6">
                     <input
                         type="text"
-                        placeholder="🔍 SEARCH FF ID..."
+                        placeholder="🔍 SEARCH BY NAME OR PRICE..."
                         value={search}
                         onChange={(e) => {
                             const value = e.target.value;
@@ -96,8 +106,8 @@ const Page = () => {
                     </div>
                 ) : (
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {Ids.slice().reverse().map((account, index) => (
-                            <div key={index+1} data-aos="fade-up" data-aos-delay={index * 50}>
+                        {Ids?.map((account, index) => (
+                            <div key={index + 1} data-aos="fade-up" data-aos-delay={index * 50}>
                                 <IdCard account={account} />
                             </div>
                         ))}

@@ -55,10 +55,10 @@ const ManageIdDesign = ({ accounts, setIds, Ids }) => {
 
 
     return (
-        <div className="min-h-screen bg-white p-6">
+        <div className="min-h-screen bg-white sm:p-6">
             <div className="">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-800">Manage IDs</h1>
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Manage IDs</h1>
                     <p className="text-gray-600 mt-2">View and manage all game accounts</p>
                 </div>
                 <div className="bg-white border border-gray-200 rounded overflow-hidden">

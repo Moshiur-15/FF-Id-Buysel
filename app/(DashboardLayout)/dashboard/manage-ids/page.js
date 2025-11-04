@@ -7,11 +7,12 @@ const ManageId = () => {
     const [Ids, setIds] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id`);
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}api/managePageAllIds`);
             setIds(response.data);
         };
         fetchData();
     }, []);
+    console.log(Ids);
     return (
         <div>
             <Suspense fallback={<div>Loading component...</div>}>

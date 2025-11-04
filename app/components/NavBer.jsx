@@ -9,7 +9,7 @@ export default function Navbar() {
     const { data } = useSession();
 
     return (
-        <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <nav className="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-[9999] shadow-sm">
             <div className="mx-auto container px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}

@@ -43,18 +43,18 @@ const AccountDetailsPage = ({ params }) => {
     if (error) return <p>{error}</p>;
     return (
         <div className="min-h-screen bg-white">
-            <div className="container mx-auto p-9 my-6">
+            <div className="container mx-auto px-4 lg:px-8 my-6">
                 <div>
                     {loading ? <Spinner /> :
                         <>
                             {/* Header Section */}
                             <div className="mb-8">
                                 <div className="flex items-center justify-between mb-4">
-                                    <h1 className="text-4xl font-bold text-black">{accountData.name}</h1>
+                                    <h1 className="text-2xl md:text-4xl font-bold text-black">{accountData.name}</h1>
                                     <div className="flex gap-3">
                                         <button
                                             onClick={() => setIsFavorite(!isFavorite)}
-                                            className={`p-3 rounded-lg transition-all ${isFavorite ? 'bg-black text-white' : 'bg-gray-100 text-black hover:bg-gray-200'}`}
+                                            className={`p-3 rounded transition-all ${isFavorite ? 'bg-black text-white' : 'bg-gray-100 text-black hover:bg-gray-200'}`}
                                         >
                                             <Heart className={isFavorite ? 'fill-current' : ''} size={24} />
                                         </button>
@@ -82,18 +82,18 @@ const AccountDetailsPage = ({ params }) => {
                                                         });
                                                 }
                                             }}
-                                            className="p-3 bg-gray-100 text-black rounded-lg hover:bg-gray-200 transition-all"
+                                            className="p-3 bg-gray-100 text-black rounded hover:bg-gray-200 transition-all"
                                         >
                                             <Share2 size={24} />
                                         </button>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4 text-gray-700">
-                                    <span className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full">
-                                        <Star className="fill-black text-black" size={20} />
+                                    <span className="flex text-[15px] sm:xl items-center gap-2 bg-gray-100 px-3 sm:px-4 py-1 sm:py-2 rounded-full">
+                                        <Star className="fill-black text-black" size={19} />
                                         <span className="text-black font-semibold">Premium Account</span>
                                     </span>
-                                    <span className="text-lg"><span className='font-bold border-b-4 border-gray-600' >UID:</span> {accountData.uid}</span>
+                                    <span className="text-[15px] sm:xl"><span className='font-bold border-b-4 border-gray-600' >UID:</span> {accountData.uid}</span>
                                 </div>
                             </div>
 
@@ -163,9 +163,9 @@ const AccountDetailsPage = ({ params }) => {
                                         <div className="flex items-end justify-between">
                                             <div>
                                                 <p className="text-gray-400 text-sm mb-1">Account Price</p>
-                                                <h2 className="text-5xl font-bold text-white">৳{accountData.price.toLocaleString()}</h2>
+                                                <h2 className="text-3xl lg:text-5xl font-bold text-white">৳{accountData.price.toLocaleString()}</h2>
                                             </div>
-                                            <button onClick={handleClick} className="bg-white text-black px-8 py-3.5 rounded font-bold text-lg hover:bg-gray-100 transition-all flex items-center gap-2 cursor-pointer active:scale-95">
+                                            <button onClick={handleClick} className="bg-white text-black lg;px-8 lg:py-3.5 px-3 py-1 text-wrap rounded font-bold text-lg hover:bg-gray-100 transition-all flex items-center gap-2 cursor-pointer active:scale-95">
                                                 <ShoppingCart size={24} />
                                                 Buy Now
                                             </button>
@@ -246,7 +246,7 @@ const AccountDetailsPage = ({ params }) => {
                                         </h3>
                                         <div className="space-y-3">
                                             {/* Animations */}
-                                            <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                                            <div className="bg-gray-800 rounded p-4 border border-gray-700">
                                                 <p className="text-gray-400 text-sm">Animations</p>
                                                 <div className="flex flex-wrap gap-2 mt-2">
                                                     <h2 className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">{accountData?.animation}</h2>
@@ -264,7 +264,7 @@ const AccountDetailsPage = ({ params }) => {
                                             </div>
 
                                             {/* Skywing (example of a single string) */}
-                                            <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                                            <div className="bg-gray-800 rounded p-4 border border-gray-700">
                                                 <p className="text-gray-400 text-sm">Skywing</p>
                                                 <div className="flex flex-wrap gap-2 mt-2">
                                                     <h2 className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">{accountData?.skywing}</h2>
