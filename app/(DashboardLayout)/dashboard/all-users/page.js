@@ -1,63 +1,75 @@
 'use client';
-import { useState } from 'react';
-import { Edit, Trash2, MoreVertical } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Delete } from 'lucide-react';
+import UserInfo from '@/app/components/shared/UserInfo';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 const ManageUsersPage = () => {
-  const [users, setUsers] = useState([
-    {
-      id: "1",
-      username: "admin_raj",
-      email: "raj@example.com",
-      role: "Admin"
-    },
-    {
-      id: "2",
-      username: "john_doe",
-      email: "john.doe@example.com",
-      role: "Editor"
-    },
-    {
-      id: "3",
-      username: "sarah_smith",
-      email: "sarah.smith@example.com",
-      role: "Viewer"
-    },
-    {
-      id: "4",
-      username: "mike_wilson",
-      email: "mike.w@example.com",
-      role: "Editor"
-    },
-    {
-      id: "5",
-      username: "emma_jones",
-      email: "emma.jones@example.com",
-      role: "Viewer"
+  const [user, setUser] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [deleteUserId, setDeleteUserId] = useState(null);
+  const [deleteUserRole, setDeleteUserRole] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 10;
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      const data = await UserInfo();
+      setUser(data);
+    };
+    loadUsers();
+  }, []);
+
+  // role change handler
+  const handleRoleChange = async (userId, newRole) => {
+    console.log(userId, newRole);
+    try {
+      const res = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}api/userInfo/${userId}`,
+        { role: newRole }
+      );
+      const updatedUser = res.data;
+      setUser(prevUsers =>
+        prevUsers.map(u =>
+          u._id === userId ? updatedUser : u
+        )
+      );
+      toast.success('User role updated successfully');
     }
-  ]);
-
-  const [openMenuId, setOpenMenuId] = useState(null);
-
-  const toggleMenu = (id) => {
-    setOpenMenuId(openMenuId === id ? null : id);
+    catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleRoleChange = (userId, newRole) => {
-    setUsers(users.map(user => 
-      user.id === userId ? { ...user, role: newRole } : user
-    ));
+  // delete user handler
+  const handleDeleteClick = (id, userRole) => {
+    setDeleteUserId(id);
+    setDeleteUserRole(userRole);
+    setShowModal(true);
   };
 
-  const handleEdit = (id) => {
-    setOpenMenuId(null);
-  };
-
-  const handleDelete = (id) => {
-    setOpenMenuId(null);
+  const confirmDelete = async () => {
+    try {
+      if (deleteUserRole === 'admin') {
+        toast.error('Cannot delete admin user!');
+        setShowModal(false);
+        return;
+      }
+      await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}api/userInfo/${deleteUserId}`);
+      const updatedUserList = user.filter(u => u._id !== deleteUserId);
+      setUser(updatedUserList);
+      toast.success('User deleted successfully!');
+      setShowModal(false);
+    }
+    catch (error) {
+      console.log(error);
+      toast.error('Failed to delete user');
+      setShowModal(false);
+    }
   };
 
   const getRoleBadgeColor = (role) => {
-    switch(role) {
+    switch (role) {
       case 'Admin':
         return 'bg-purple-100 text-purple-800 border-purple-200';
       case 'Editor':
@@ -68,16 +80,15 @@ const ManageUsersPage = () => {
         return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
-
   return (
     <div className="min-h-screen bg-white p-6">
-      <div className="">
+      <div>
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-800">Manage Users</h1>
           <p className="text-gray-600 mt-2">View and manage user accounts and permissions</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+        <div className="bg-white border border-gray-100 rounded overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -89,23 +100,17 @@ const ManageUsersPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user, index) => (
-                  <tr 
-                    key={user.id} 
-                    className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
-                      index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
-                    }`}
+                {user.slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage).map((user, index) => (
+                  <tr
+                    key={user._id}
+                    className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
+                      }`}
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                          <span className="text-blue-700 font-semibold text-sm">
-                            {user.username.charAt(0).toUpperCase()}
-                          </span>
-                        </div>
                         <div>
-                          <span className="text-sm font-semibold text-gray-800">{user.username}</span>
-                          <span className="block text-xs text-gray-500">ID: #{user.id}</span>
+                          <span className="text-sm font-semibold text-gray-800 whitespace-nowrap">{user.name}</span>
+                          <span className="block text-xs text-gray-500">#{user._id.slice(0, 4)}...{user._id.slice(-4)}</span>
                         </div>
                       </div>
                     </td>
@@ -114,41 +119,23 @@ const ManageUsersPage = () => {
                     </td>
                     <td className="px-6 py-4">
                       <select
-                        value={user.role}
-                        onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                        className={`px-3 py-1 rounded text-sm font-medium border cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${getRoleBadgeColor(user.role)}`}
+                        value={user?.role}
+                        onChange={(e) => handleRoleChange(user?._id, e.target.value)}
+                        disabled={user?.role === 'admin'}
+                        className={`px-3 py-1 rounded text-sm font-medium border cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${getRoleBadgeColor(user?.role)}`}
                       >
-                        <option value="Admin">Admin</option>
-                        <option value="Viewer">Viewer</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">Viewer</option>
                       </select>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex justify-center relative">
                         <button
-                          onClick={() => toggleMenu(user.id)}
+                          onClick={() => handleDeleteClick(user?._id, user?.role)}
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                         >
-                          <MoreVertical className="w-5 h-5 text-gray-600" />
+                          <Delete className="w-5 h-5 text-gray-600" />
                         </button>
-                        
-                        {openMenuId === user.id && (
-                          <div className="absolute right-0 top-12 bg-white border border-gray-200 rounded-lg shadow-lg z-10 w-40">
-                            <button
-                              onClick={() => handleEdit(user.id)}
-                              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                            >
-                              <Edit className="w-4 h-4 text-blue-600" />
-                              <span>Edit</span>
-                            </button>
-                            <button
-                              onClick={() => handleDelete(user.id)}
-                              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                              <span>Delete</span>
-                            </button>
-                          </div>
-                        )}
                       </div>
                     </td>
                   </tr>
@@ -159,17 +146,53 @@ const ManageUsersPage = () => {
         </div>
 
         <div className="mt-6 flex items-center justify-between text-sm text-gray-600">
-          <span>Showing {users.length} users</span>
-          <div className="flex gap-2">
-            <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+          <span>Showing {Math.min((currentPage - 1) * usersPerPage + 1, user.length)}-{Math.min(currentPage * usersPerPage, user.length)} of {user.length} users</span>
+          <div className="flex gap-2 items-center">
+            <button 
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               Previous
             </button>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <span className="px-1 py-3 text-gray-700">
+              {currentPage} - {Math.ceil(user.length / usersPerPage)}
+            </span>
+            <button 
+              onClick={() => setCurrentPage(prev => prev + 1)}
+              disabled={currentPage >= Math.ceil(user.length / usersPerPage)}
+              className="disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              
               Next
             </button>
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded max-w-sm w-full mx-4">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Confirm Delete</h3>
+            <p className="text-gray-600 mb-6">Are you sure you want to delete this user?</p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+              >
+                No
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

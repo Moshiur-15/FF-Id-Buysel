@@ -93,7 +93,7 @@ export default function AuthPages() {
     };
 
     return (
-        <div className="min-h-screen relative flex items-center justify-center p-4">
+        <div className="min-h-screen mt-14 relative flex items-center justify-center p-4">
             {/* Background Image */}
             <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
