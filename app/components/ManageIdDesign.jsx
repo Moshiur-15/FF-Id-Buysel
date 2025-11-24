@@ -5,9 +5,12 @@ import axios from 'axios';
 import Link from 'next/link'
 import { toast } from 'sonner';
 import MyPagination from './MyPagination';
+import { set } from 'mongoose';
 
 const ManageIdDesign = ({ accounts, setIds, Ids }) => {
     const [openMenuId, setOpenMenuId] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [deleteUserId, setDeleteUserId] = useState(null);
 
     const handleStatusChange = async (id, newStatus) => {
         try {
@@ -34,13 +37,21 @@ const ManageIdDesign = ({ accounts, setIds, Ids }) => {
     };
 
     const handleDelete = async (id) => {
+        setShowModal(true);
+        setDeleteUserId(id);
+    };
+
+    const confirmDelete = async () => {
         try {
-            const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id/${id}`)
-            setIds(Ids.filter(item => item._id !== id));
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}api/add-id/${deleteUserId}`)
+            setIds(Ids.filter(item => item._id !== deleteUserId));
             toast.success(res?.data?.message)
+            setShowModal(false);
         }
-        catch (err) {
-            console.log(err);
+        catch (error) {
+            console.log(error);
+            toast.error('Failed to delete user');
+            setShowModal(false);
         }
         setOpenMenuId(null);
     };
@@ -175,6 +186,30 @@ const ManageIdDesign = ({ accounts, setIds, Ids }) => {
                         />
                     </div>
                 </div>
+
+                {/* delete modal */}
+                {showModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white p-6 rounded max-w-sm w-full mx-4">
+                            <h3 className="text-lg font-semibold text-gray-800 mb-4">Confirm Delete</h3>
+                            <p className="text-gray-600 mb-6">Are you sure you want to delete this user?</p>
+                            <div className="flex gap-3 justify-end">
+                                <button
+                                    onClick={() => setShowModal(false)}
+                                    className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                                >
+                                    No
+                                </button>
+                                <button
+                                    onClick={confirmDelete}
+                                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                                >
+                                    Yes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </>
         </div>
     );
