@@ -83,7 +83,7 @@ const Page = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-200 p-4 md:p-8">
+    <>
       <div className="">
         <div className="mb-8 border-b-4 border-black pb-4">
           <h1 className="text-4xl md:text-5xl font-bold text-black">ADD GAME ID</h1>
@@ -369,7 +369,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

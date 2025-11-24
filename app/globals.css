@@ -134,3 +134,23 @@ html, body {
 body {
   font-family: 'Oswald', sans-serif;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+
+/* Scrollbar track (background) */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 12px; /* scrollbar এর width */
+}
+/* Firefox support */
+.scrollbar-custom {
+  scrollbar-width: thin; /* auto, thin, none */
+  scrollbar-color: #6a63f769 #6c8bef7e; /* thumb color | track color */
+}

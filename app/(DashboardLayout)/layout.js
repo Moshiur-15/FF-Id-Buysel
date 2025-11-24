@@ -20,11 +20,11 @@ const Layout = ({ children }) => {
   return (
     <>
       {data?.user?.role === 'admin' && (
-        <div>
+        <div className='h-screen overflow-hidden flex'>
           <SidebarProvider>
             <AppSidebar />
-            <SidebarInset className="bg-white shadow-lg rounded-r-xl border-gray-200">
-              <header className="flex justify-between items-center h-16 px-4 border-b border-gray-200">
+            <SidebarInset className="bg-white shadow-lg rounded-r-xl border-gray-200 min-w-0">
+              <header className="bg-blue-50 border-b flex sticky z-50 top-0 justify-between items-center h-16 px-4 border-gray-300">
                 {/* Left Section */}
                 <div className="flex items-center gap-3">
                   <SidebarTrigger className="text-gray-700 hover:text-black" />
@@ -36,7 +36,7 @@ const Layout = ({ children }) => {
 
                 {/* Right Section */}
                 <div className="flex items-center gap-3">
-                  <Link href="/"><Home className="text-gray-600 hover:text-black" /></Link>
+                  <Link href="/dashboard"><Home className="text-gray-600 hover:text-black" /></Link>
                   <img
                     src="/563dd4c11d7f61ef99c1b8d1892bd759.jpg"
                     alt="logo"
@@ -46,7 +46,7 @@ const Layout = ({ children }) => {
               </header>
 
               {/* Content */}
-              <div className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto">
+              <div className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto scrollbar-hide">
                 {children}
               </div>
             </SidebarInset>
