@@ -42,6 +42,17 @@ export const authOptions = {
         };
       },
     }),
+    GoogleProvider({
+      clientId: process.env.NEXT_GOOGLE_CLIENT_ID,
+      clientSecret: process.env.NEXT_GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
+    })
   ],
   session: {
     strategy: "jwt",
@@ -50,6 +61,32 @@ export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
   },
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      if (account.provider === "google") {
+        try {
+          await connectToDatabase();
+          const existingUser = await User.findOne({ email: user.email });
+
+          if (!existingUser) {
+            // নতুন ইউজার ক্রিয়েট
+            const newUser = new User({
+              name: user.name,
+              email: user.email,
+              googleId: profile.sub, // profile.sub হলো Google এর unique ID
+              role: "user",
+            });
+            await newUser.save();
+          }
+          return true;
+        } catch (error) {
+          console.log("Google signIn error:", error);
+          return false;
+        }
+      }
+      // Credentials লগইনের জন্য true
+      return true;
+    },
+
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -59,6 +96,7 @@ export const authOptions = {
       }
       return token;
     },
+
     async session({ session, token }) {
       if (!session.user) session.user = {};
       session.user.id = token.id;

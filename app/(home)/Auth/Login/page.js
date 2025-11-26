@@ -4,7 +4,6 @@ import { Mail, Lock, User, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 import { signIn } from "next-auth/react";
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 import { Spinner } from '@/components/ui/spinner';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -240,6 +239,7 @@ function LoginForm({ showPassword, setShowPassword, handleLog, loginLoading }) {
             {/* Social Login */}
             <div data-aos="fade-up" data-aos-delay="600" className="grid grid-cols-2 gap-4">
                 <button
+                    onClick={() => signIn('google')}
                     type="button"
                     className="bg-white border-2 border-gray-300 text-gray-700 py-3 rounded font-medium hover:bg-gray-50 hover:border-gray-400 transition-all"
                 >
@@ -360,6 +360,7 @@ function RegisterForm({ showPassword, setShowPassword, handleReg, regLoading }) 
             {/* Social Login */}
             <div data-aos="fade-up" data-aos-delay="700" className="grid grid-cols-2 gap-4">
                 <button
+                    onClick={() => signIn('google')}
                     type="button"
                     className="bg-white border-2 border-gray-300 text-gray-700 py-3 rounded font-medium hover:bg-gray-50 hover:border-gray-400 transition-all"
                 >

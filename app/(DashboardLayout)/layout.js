@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
           <SidebarProvider>
             <AppSidebar />
             <SidebarInset className="bg-white shadow-lg rounded-r-xl border-gray-200 min-w-0">
-              <header className="bg-blue-50 border-b flex sticky z-50 top-0 justify-between items-center h-16 px-4 border-gray-300">
+              <header className="bg-blue-50 py-9 border-b flex sticky z-50 top-0 justify-between items-center h-16 px-4 border-gray-300">
                 {/* Left Section */}
                 <div className="flex items-center gap-3">
                   <SidebarTrigger className="text-gray-700 hover:text-black" />

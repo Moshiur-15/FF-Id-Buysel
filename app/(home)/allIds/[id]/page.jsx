@@ -39,12 +39,32 @@ const AccountDetailsPage = ({ params }) => {
         const url = `https://wa.me/${phoneNumber}?text=${message}`;
         window.open(url, "_blank");
     };
-
     if (error) return <p>{error}</p>;
+
+
+
+
+    const [form, setForm] = useState({ name: "", email: "", comment: "" });
+    const [comments, setComments] = useState([]);
+
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!form.name || !form.email || !form.comment) return;
+
+        setComments([...comments, form]);
+        setForm({ name: "", email: "", comment: "" });
+        // only login user can comment
+    };
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white text-black">
             <div className="container mx-auto px-4 lg:px-8 my-6">
-                <div>
+                <>
                     {loading ? <Spinner /> :
                         <>
                             {/* Header Section */}
@@ -105,8 +125,8 @@ const AccountDetailsPage = ({ params }) => {
                                         <div className="aspect-video bg-gray-100">
                                             {accountData?.images?.length > 0 ? (
                                                 <img
-                                                    src={accountData.images[selectedImage] || 'https://i.ibb.co.com/8nFV1RZY/white-bokeh-lights-background.webp'}
-                                                    alt={accountData.name}
+                                                    src={accountData?.images[selectedImage] || 'https://i.ibb.co.com/DDCS1VHS/pexels-photo-831243.webp'}
+                                                    alt="Main Preview"
                                                     className="w-full h-full object-cover"
                                                 />
                                             ) : (
@@ -117,10 +137,9 @@ const AccountDetailsPage = ({ params }) => {
                                         </div>
                                     </div>
 
-
                                     {/* Thumbnail Gallery */}
                                     <div className="grid grid-cols-5 gap-3">
-                                        {accountData.images.map((img, idx) => (
+                                        {accountData?.images.map((img, idx) => (
                                             <button
                                                 key={idx}
                                                 onClick={() => setSelectedImage(idx)}
@@ -129,10 +148,21 @@ const AccountDetailsPage = ({ params }) => {
                                                     : 'border-gray-200 hover:border-gray-400'
                                                     }`}
                                             >
-                                                <img src={img} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
+                                                {img ? (
+                                                    <img
+                                                        src={img}
+                                                        alt={`Preview ${idx + 1}`}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-sm text-gray-500">
+                                                        No Image
+                                                    </div>
+                                                )}
                                             </button>
                                         ))}
                                     </div>
+
                                     {/* Video Section */}
                                     {accountData?.video && (
                                         <div className="bg-gray-50 rounded-sm overflow-hidden border border-gray-200">
@@ -152,6 +182,61 @@ const AccountDetailsPage = ({ params }) => {
                                             </div>
                                         </div>
                                     )}
+
+                                    {/* comment section */}
+                                    <div className=''>
+                                        <h2 className="text-2xl font-bold mb-4 my-10">Comment Section</h2>
+
+
+                                        <form onSubmit={handleSubmit} className="space-y-4 bg-[#f7f7f7] p-4 rounded relative">
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                placeholder="Your Name"
+                                                value={form.name}
+                                                onChange={handleChange}
+                                                className="w-full bg-white p-2"
+                                            />
+
+
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                placeholder="Your Email"
+                                                value={form.email}
+                                                onChange={handleChange}
+                                                className="w-full bg-white p-2"
+                                            />
+
+
+                                            <textarea
+                                                name="comment"
+                                                placeholder="Write your comment..."
+                                                value={form.comment}
+                                                onChange={handleChange}
+                                                className="w-full p-2 rounded bg-white resize-none h-48"
+                                                maxLength={500}
+                                            ></textarea>
+
+
+                                            <button
+                                                type="submit"
+                                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-28 transition-all absolute bottom-11 right-5"
+                                            >
+                                                Post
+                                            </button>
+                                        </form>
+
+
+                                        <div className="mt-6 space-y-4">
+                                            {comments.slice().reverse().map((c, i) => (
+                                                <div key={i} className="bg-gray-100 p-3 rounded">
+                                                    <h3 className="font-semibold">{c?.name}</h3>
+                                                    <p className="text-gray-700 mt-1">{c?.comment}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
 
                                 </div>
 
@@ -294,7 +379,7 @@ const AccountDetailsPage = ({ params }) => {
                                 </div>
                             </div>
                         </>}
-                </div>
+                </>
             </div>
         </div>
     );

@@ -14,10 +14,10 @@ export default function Navbar() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex items-center">
-                        <div className="flex-shrink-0 flex items-center">
+                        <Link href='/' className="flex-shrink-0 flex items-center">
                             <Zap className="h-8 w-8 text-black mr-2" />
                             <span className="text-black font-bold text-xl">FF BuySell</span>
-                        </div>
+                        </Link>
                     </div>
 
                     <section>

@@ -71,6 +71,26 @@ const Page = () => {
     try {
       const res = await axios.post('/api/add-id', formData);
       toast.success("ID added successfully!");
+      setFormData({
+        name: "",
+        description: "",
+        uid: 0,
+        price: 0,
+        level: 0,
+        evoGun: 0,
+        evoMax: 0,
+        totalVolt: 0,
+        totalMask: 0,
+        totalHere: 0,
+        totalPanth: 0,
+        totalEmote: 0,
+        animation: "",
+        skywing: "",
+        images: ["", "", "", "", "", "", "", "", "", ""],
+        video: "",
+        diamondClaimable: 0,
+        diamond: 0,
+      });
       if (res.status !== 200) {
         toast.error("Failed to add ID. Please try again.");
         return;
